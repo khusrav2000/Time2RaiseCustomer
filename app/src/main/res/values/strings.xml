@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Time2RaiseCustomer</string>
+    <string name="title_activity_main_page">MainPageActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="events">events</string>
+    <string name="orders">orders</string>
+</resources>
