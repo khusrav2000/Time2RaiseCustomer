@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/profile_icon"
+                android:layout_width="103dp"
+                android:layout_height="94dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/profile_photo"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_photo"
+                android:textColor="@color/orange"
+                android:textSize="14sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto_medium"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+                <EditText
+                    android:id="@+id/edit_client_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_marginStart="@dimen/profile_start_end_margins"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="@dimen/profile_start_end_margins"
+                    android:background="@drawable/profile_information_border"
+                    android:gravity="center_vertical"
+                    android:hint="@string/your_name"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/edit_client_first_name"
+                    android:layout_alignTop="@id/edit_client_first_name"
+                    android:layout_marginTop="-25dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/first_name"
+                    android:textColor="@color/profile_text_color_black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edit_client_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_marginStart="@dimen/profile_start_end_margins"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="@dimen/profile_start_end_margins"
+                    android:background="@drawable/profile_information_border"
+                    android:gravity="center_vertical"
+                    android:hint="@string/your_last_name"
+                    android:layout_below="@id/edit_client_first_name"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/edit_client_last_name"
+                    android:layout_alignTop="@id/edit_client_last_name"
+                    android:layout_marginTop="-25dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/last_name"
+                    android:textColor="@color/profile_text_color_black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edit_client_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_marginStart="@dimen/profile_start_end_margins"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="@dimen/profile_start_end_margins"
+                    android:background="@drawable/profile_information_border"
+                    android:gravity="center_vertical"
+                    android:hint="@string/your_email"
+                    android:layout_below="@id/edit_client_last_name"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/edit_client_email"
+                    android:layout_alignTop="@id/edit_client_email"
+                    android:layout_marginTop="-25dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/email"
+                    android:textColor="@color/profile_text_color_black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/edit_client_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_marginStart="@dimen/profile_start_end_margins"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="@dimen/profile_start_end_margins"
+                    android:background="@drawable/profile_information_border"
+                    android:gravity="center_vertical"
+                    android:hint="@string/your_phone"
+                    android:layout_below="@id/edit_client_email"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/edit_client_phone"
+                    android:layout_alignTop="@id/edit_client_phone"
+                    android:layout_marginTop="-25dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@string/phone"
+                    android:textColor="@color/profile_text_color_black"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+            
+            <Button
+                android:layout_width="289dp"
+                android:layout_height="43dp"
+                android:background="@drawable/profile_save_button_background"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_medium"/>
+
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

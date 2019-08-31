@@ -7,6 +7,33 @@
     android:layout_height="match_parent"
     tools:context=".MainPageActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="0.1dp"
+        android:background="@drawable/toolbars_background"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+        <ImageView
+            android:id="@+id/icon_profile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:elevation="5dp"
+            android:src="@drawable/photo"
+            android:scaleType="centerCrop"/>
+
+    </android.support.v7.widget.Toolbar>
+    <TextView
+        android:id="@+id/openver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="200dp"
+        android:text="Open ver"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/nav_view"
@@ -18,6 +45,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:itemIconTint="@drawable/bottom_navigation_colors"
+        app:itemTextColor="@drawable/bottom_navigation_colors"
         app:menu="@menu/bottom_nav_menu" />
 
 </android.support.constraint.ConstraintLayout>
