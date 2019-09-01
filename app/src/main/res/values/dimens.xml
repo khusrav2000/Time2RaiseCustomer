@@ -5,4 +5,16 @@
     <dimen name="profile_start_end_margins">15dp</dimen>
     <dimen name="buttons_height">80dp</dimen>
     <dimen name="buttons_text_size">40sp</dimen>
+
+    <dimen name="number_phone_line_height_before">2dp</dimen>
+    <dimen name="number_phone_line_height_after">4dp</dimen>
+
+    <dimen name="number_phone_line_margin_top_before">5dp</dimen>
+    <dimen name="number_phone_line_margin_top_after">3.5dp</dimen>
+
+    <dimen name="code_country_line_height_before">2dp</dimen>
+    <dimen name="code_country_line_height_after">4dp</dimen>
+
+    <dimen name="code_country_line_margin_top_before">5dp</dimen>
+    <dimen name="code_country_line_margin_top_after">3.5dp</dimen>
 </resources>

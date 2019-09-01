@@ -132,7 +132,8 @@
                     android:inputType="phone"
                     android:maxLines="1"
                     android:paddingStart="15dp"
-                    android:paddingEnd="15dp" />
+                    android:paddingEnd="15dp"
+                    android:enabled="false"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -147,6 +148,7 @@
             </RelativeLayout>
             
             <Button
+                android:id="@+id/save_profile_information"
                 android:layout_width="289dp"
                 android:layout_height="43dp"
                 android:background="@drawable/profile_save_button_background"

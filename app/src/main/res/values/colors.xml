@@ -9,4 +9,6 @@
     <color name="blacck">#000000</color>
     <color name="profile_text_color_black">#494A4C</color>
     <color name="hint_color">#CCCDCD</color>
+    <color name="green">#008000</color>
+    <color name="red">#FF0000</color>
 </resources>

@@ -35,4 +35,13 @@
     <string name="type_verification_code">Please type, verification code sent to NUMBER</string>
     <string name="enter_your_code">Enter your code</string>
     <string name="send_again">Send again</string>
+    <string name="green">#008000</string>
+    <string name="error_number_phone">Please enter another number</string>
+    <string name="wrong_code">Wrong code!</string>
+    <string name="ongoing_orders">Ongoing orders</string>
+    <string name="past_orders">Past orders</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="events_big">Events</string>
 </resources>

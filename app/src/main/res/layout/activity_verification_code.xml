@@ -73,7 +73,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp">
 
-                <EditText
+                <TextView
                     android:id="@+id/first_number_of_code"
                     android:layout_width="47dp"
                     android:layout_height="47dp"
@@ -81,11 +81,9 @@
                     android:gravity="center"
                     android:textSize="24sp"
                     android:fontFamily="@font/roboto_medium"
-                    android:textColor="@color/profile_text_color_black"
-                    android:maxLength="1"
-                    android:nextFocusLeft="@id/second_number_of_code"/>
+                    android:textColor="@color/profile_text_color_black" />
 
-                <EditText
+                <TextView
                     android:id="@+id/second_number_of_code"
                     android:layout_width="47dp"
                     android:layout_height="47dp"
@@ -94,10 +92,9 @@
                     android:textSize="24sp"
                     android:fontFamily="@font/roboto_medium"
                     android:textColor="@color/profile_text_color_black"
-                    android:layout_marginStart="20dp"
-                    android:maxLength="1"/>
+                    android:layout_marginStart="20dp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/third_number_of_code"
                     android:layout_width="47dp"
                     android:layout_height="47dp"
@@ -106,10 +103,9 @@
                     android:textSize="24sp"
                     android:fontFamily="@font/roboto_medium"
                     android:textColor="@color/profile_text_color_black"
-                    android:layout_marginStart="20dp"
-                    android:maxLength="1"/>
+                    android:layout_marginStart="20dp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/fourth_number_of_code"
                     android:layout_width="47dp"
                     android:layout_height="47dp"
@@ -118,10 +114,19 @@
                     android:textSize="24sp"
                     android:fontFamily="@font/roboto_medium"
                     android:textColor="@color/profile_text_color_black"
-                    android:layout_marginStart="20dp"
-                    android:maxLength="1"/>
+                    android:layout_marginStart="20dp" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/wrong_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wrong_code"
+                android:textColor="@color/red"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -130,7 +135,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textSize="14sp"
                 android:fontFamily="@font/roboto_medium"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:textColor="@color/orange"/>
 
 
@@ -148,7 +153,7 @@
                 <Button
                     android:id="@+id/number_one"
                     android:layout_height="@dimen/buttons_height"
-                    android:background="@drawable/digits_background_4"
+                    android:background="@drawable/button_enter_effect"
                     android:layout_marginEnd="1dp"
                     android:text="@string/one"
                     android:textSize="@dimen/buttons_text_size"
@@ -157,16 +162,18 @@
                     />
 
                 <Button
+                    android:id="@+id/number_two"
                     android:text="@string/two"
                     android:layout_height="@dimen/buttons_height"
-                    android:background="@drawable/digits_background_4"
+                    android:background="@drawable/button_enter_effect"
                     android:textSize="@dimen/buttons_text_size"
                     android:textAllCaps="false"
                     android:textColor="@color/white"/>
 
                 <Button
+                    android:id="@+id/number_three"
                     android:layout_height="@dimen/buttons_height"
-                    android:background="@drawable/digits_background_4"
+                    android:background="@drawable/button_enter_effect"
                     android:layout_marginStart="1dp"
                     android:text="@string/three"
                     android:textSize="@dimen/buttons_text_size"
@@ -176,8 +183,9 @@
             </TableRow>
             <TableRow>
                 <Button
+                    android:id="@+id/number_four"
                     android:layout_height="@dimen/buttons_height"
-                    android:background="@drawable/digits_background_4"
+                    android:background="@drawable/button_enter_effect"
                     android:layout_marginEnd="1dp"
                     android:layout_marginTop="1dp"
                     android:text="@string/four"
@@ -186,17 +194,19 @@
                     android:textColor="@color/white"/>
 
                 <Button
+                    android:id="@+id/number_five"
                     android:layout_height="@dimen/buttons_height"
                     android:text="@string/five"
-                    android:background="@drawable/digits_background_4"
+                    android:background="@drawable/button_enter_effect"
                     android:layout_marginTop="1dp"
                     android:textSize="@dimen/buttons_text_size"
                     android:textAllCaps="false"
                     android:textColor="@color/white"/>
 
                 <Button
+                    android:id="@+id/number_six"
                     android:layout_height="@dimen/buttons_height"
-                    android:background="@drawable/digits_background_4"
+                    android:background="@drawable/button_enter_effect"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="1dp"
                     android:text="@string/six"
@@ -207,8 +217,9 @@
 
             <TableRow>
                 <Button
+                    android:id="@+id/number_seven"
                     android:layout_height="@dimen/buttons_height"
-                    android:background="@drawable/digits_background_4"
+                    android:background="@drawable/button_enter_effect"
                     android:layout_marginEnd="1dp"
                     android:layout_marginTop="1dp"
                     android:text="@string/seven"
@@ -217,8 +228,9 @@
                     android:textColor="@color/white"/>
 
                 <Button
+                    android:id="@+id/number_eight"
                     android:layout_height="@dimen/buttons_height"
-                    android:background="@drawable/digits_background_4"
+                    android:background="@drawable/button_enter_effect"
 
                     android:layout_marginTop="1dp"
                     android:text="@string/eight"
@@ -227,8 +239,9 @@
                     android:textColor="@color/white" />
 
                 <Button
+                    android:id="@+id/number_nine"
                     android:layout_height="@dimen/buttons_height"
-                    android:background="@drawable/digits_background_4"
+                    android:background="@drawable/button_enter_effect"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="1dp"
                     android:text="@string/nine"
@@ -246,8 +259,9 @@
                     android:textColor="@color/white"/>
 
                 <Button
+                    android:id="@+id/number_zero"
                     android:layout_height="@dimen/buttons_height"
-                    android:background="@drawable/digits_background_4"
+                    android:background="@drawable/button_enter_effect"
 
                     android:layout_marginTop="1dp"
                     android:text="@string/zero"
@@ -256,8 +270,9 @@
                     android:textColor="@color/white"/>
 
                 <Button
+                    android:id="@+id/delete"
                     android:layout_height="@dimen/buttons_height"
-                    android:background="@drawable/digits_background_4"
+                    android:background="@drawable/button_enter_effect"
                     android:layout_marginStart="1dp"
                     android:layout_marginTop="1dp"
                     android:drawableStart="@drawable/ic_delete"
