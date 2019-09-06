@@ -100,7 +100,7 @@ public class VerifyPhoneNumber extends AppCompatActivity implements View.OnClick
         phoneNumber.setOnClickListener(this);
         //selectCountryCode.setOnItemClickListener;
 
-        String[] data = {"USA (+1)", "Spain (+34)", "Tajikistan (+992)"};
+        String[] data = {"USA (+1)", "Spain (+34)", "Tajikistan (+992)", "Russia (+7)"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -125,10 +125,16 @@ public class VerifyPhoneNumber extends AppCompatActivity implements View.OnClick
 
     }
 
-
+    // Проверка на исключительность номера телефона.
     public void validateContact(){
-        if (codeCountryPosition == 2) {
-            final StringBuilder sendVerificationNumber = new StringBuilder("+992" + resultNumberPhone);
+        if (codeCountryPosition == 2 || codeCountryPosition == 3) {
+            final StringBuilder sendVerificationNumber;
+            if (codeCountryPosition == 2) {
+                sendVerificationNumber = new StringBuilder("+992" + resultNumberPhone);
+            } else {
+                sendVerificationNumber = new StringBuilder("+7" + resultNumberPhone);
+            }
+
             Retrofit retrofit = NetworkClient.getRetrofitClient();
             Customer customer = retrofit.create(Customer.class);
             Call call = customer.validationPhone(sendVerificationNumber.toString());
@@ -136,6 +142,7 @@ public class VerifyPhoneNumber extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onResponse(Call call, Response response) {
                     if (response.code() == 404) {
+                        // Если такого номера телефона нет, то сработает эта функция.
                         sendVerificationPhone(sendVerificationNumber.toString());
                     }
                     else {
@@ -156,6 +163,7 @@ public class VerifyPhoneNumber extends AppCompatActivity implements View.OnClick
         }
     }
 
+    // Отправка номера телефона для получения смс кода.
     private void sendVerificationPhone(String phone){
         Retrofit retrofit = NetworkClient.getRetrofitClient();
         Customer customer = retrofit.create(Customer.class);
@@ -170,6 +178,8 @@ public class VerifyPhoneNumber extends AppCompatActivity implements View.OnClick
 
             }
         });
+
+        // Переход на ввод полученного ао смс код-а.
         startEnterVerificationCode(phone);
     }
 

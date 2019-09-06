@@ -21,7 +21,9 @@ import retrofit2.Retrofit;
 
 public class VerificationCode extends AppCompatActivity implements View.OnClickListener {
 
+    // Все кнопки от нуля до девяти.
     Button[] numbers = new Button[12];
+
     Button delete;
 
     TextView firstNumber;
@@ -127,12 +129,14 @@ public class VerificationCode extends AppCompatActivity implements View.OnClickL
             } else if (verificationCode.length() == 4) {
                 fourthNumber.setText(String.valueOf(digit));
                 System.out.println("CHEKKKKK --------------------------------");
+                // если заполнить все четыре цифры, то сработает это функция.
                 verificationNumber(verificationCode.toString());
             }
 
         }
     }
 
+    // Здесь проверяется вводимый пользователем код с кодом который пришел по смс.
     private void verificationNumber(String verificationCode){
         phone = getIntent().getStringExtra("phone");
         Retrofit retrofit = NetworkClient.getRetrofitClient();
@@ -144,8 +148,10 @@ public class VerificationCode extends AppCompatActivity implements View.OnClickL
             public void onResponse(Call call, Response response) {
                 if (response.code() == 200){
                     System.out.println("YES-----------------------------------------------");
+                    // Если оба код-а совпадают, то откроется страница заполнения данных о пользователе.
                     startProfileActivity();
                 }else {
+                    // Если нет, то всплывает сообщения об не совпадении код-ов.
                     wrongCode.setVisibility(View.VISIBLE);
                 }
             }
@@ -158,6 +164,8 @@ public class VerificationCode extends AppCompatActivity implements View.OnClickL
     }
 
     private void startProfileActivity() {
+
+        // Перед тем, как перейти в профиль данные о входе по этому номеру сохраняется в Preference.
         SharedPreferences.Editor editor = skipLoginPhone.edit();
         editor.putString(APP_PREFERENCES_PHONE, phone);
         editor.apply();
@@ -166,6 +174,8 @@ public class VerificationCode extends AppCompatActivity implements View.OnClickL
         startActivity(intent);
     }
 
+
+    // Здесь обрабатывается кнопка очистки цифр.
     private void deleteChar(){
         wrongCode.setVisibility(View.GONE);
         if (verificationCode.length() > 0){
