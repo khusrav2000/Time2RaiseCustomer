@@ -11,4 +11,8 @@
     <color name="hint_color">#CCCDCD</color>
     <color name="green">#008000</color>
     <color name="red">#FF0000</color>
+    <color name="event_times_color">#949191</color>
+    <color name="event_top_text_free_food">#494A4D</color>
+    <color name="line_color">#DADADA</color>
+    <color name="event_information_organizer_address">#C4C4C4</color>
 </resources>

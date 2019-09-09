@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.time2raise.customer.R;
+import com.time2raise.customer.data.model.EventInformation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +25,7 @@ public class MyListEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyList
 
     // Список event-ов, которые мы получаем из сервера.
     // Events - Это модель для помещения в него получаемых данных из сервера.
-    private final List<String> mValues;
+    private final List<EventInformation> mValues;
 
     private final ListEventsFragment.OnListFragmentInteractionListener mListener;
 
@@ -34,7 +35,7 @@ public class MyListEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyList
 
     View getContexts;
 
-    public MyListEventsRecyclerViewAdapter(List<String> items, ListEventsFragment.OnListFragmentInteractionListener listener) {
+    public MyListEventsRecyclerViewAdapter(List<EventInformation> items, ListEventsFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -65,12 +66,12 @@ public class MyListEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyList
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
+        final View mView;
 
 
-        public String mItem;
+        EventInformation mItem;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             mView = view;
 

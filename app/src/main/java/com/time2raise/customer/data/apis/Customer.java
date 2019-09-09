@@ -1,6 +1,10 @@
 package com.time2raise.customer.data.apis;
 
+import com.time2raise.customer.Event;
+import com.time2raise.customer.data.model.EventInformation;
 import com.time2raise.customer.data.model.Message;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -16,5 +20,8 @@ public interface Customer {
 
     @GET("/api/customer/valid/{phone}/{code}")
     Call<Message> checkVerificationCode(@Path("phone") String phone, @Path("code") String code);
+
+    @GET("api/customer/events/{limit}")
+    Call< List<EventInformation> > getEvents(@Path("limit") int limit);
 
 }

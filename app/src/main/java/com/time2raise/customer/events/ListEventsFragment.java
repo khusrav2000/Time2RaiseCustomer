@@ -11,8 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.time2raise.customer.R;
+import com.time2raise.customer.data.NetworkClient;
+import com.time2raise.customer.data.apis.Customer;
+import com.time2raise.customer.data.model.EventInformation;
 import com.time2raise.customer.orders.ListOngoingOrdersFragment;
 
+import java.util.EventListener;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -118,19 +122,19 @@ public class ListEventsFragment extends Fragment  {
 
     private void loadEvents(){
 
-        /*// Загрузка списка event-ов с сервера.
+        // Загрузка списка event-ов с сервера.
         Retrofit retrofit = NetworkClient.getRetrofitClient();
-        Initiator iOrganization = retrofit.create(Initiator.class);
+        Customer iOrganization = retrofit.create(Customer.class);
 
         // TODO: Поменять лимит для количество event-ов.
-        Call call = iOrganization.getEvents(LoginDataSource.getInitiator().getToken(), 25);
+        Call call = iOrganization.getEvents(25);
 
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
 
                 if (response.isSuccessful()) {
-                    List<Events> events = (List<Events>) response.body();
+                    List<EventInformation> events = (List<EventInformation>) response.body();
                     System.out.println("----------------Events are loaded ---------------------------");
                     setAdapter(events);
                 }
@@ -140,14 +144,11 @@ public class ListEventsFragment extends Fragment  {
             public void onFailure(Call call, Throwable t) {
 
             }
-        });*/
-        setAdapter();
+        });
+
     }
 
-    private void setAdapter(/*List<Events> events*/){
-        List<String> list = new LinkedList<>();
-        list.add("111");
-        list.add("222");
-        recyclerView.setAdapter(new MyListEventsRecyclerViewAdapter(list, mListener));
+    private void setAdapter(List<EventInformation> events){
+        recyclerView.setAdapter(new MyListEventsRecyclerViewAdapter(events, mListener));
     }
 }

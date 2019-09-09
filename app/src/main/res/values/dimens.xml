@@ -17,4 +17,5 @@
 
     <dimen name="code_country_line_margin_top_before">5dp</dimen>
     <dimen name="code_country_line_margin_top_after">3.5dp</dimen>
+    <dimen name="event_end_margin">10dp</dimen>
 </resources>

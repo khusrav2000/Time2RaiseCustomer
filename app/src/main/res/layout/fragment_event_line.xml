@@ -7,6 +7,79 @@
     android:layout_marginEnd="20dp"
     android:background="@drawable/event_request_background"
     android:elevation="3dp">
+    <ImageView
+        android:id="@+id/my_event_main_image"
+        android:layout_width="125dp"
+        android:layout_height="98dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/no_photo" />
+
+    <TextView
+        android:id="@+id/my_event_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="@string/event_name"
+        android:fontFamily="@font/roboto_bold"
+        android:layout_toEndOf="@id/my_event_main_image"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/my_event_start_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/my_event_main_image"
+        android:layout_below="@id/my_event_name"
+        android:text="@string/time"
+        android:textSize="8sp"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="@color/event_times_color"
+        android:drawableStart="@drawable/icon_time"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="5dp"/>
+
+    <TextView
+        android:id="@+id/my_event_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/my_event_main_image"
+        android:layout_below="@id/my_event_start_end_time"
+        android:text="@string/date"
+        android:textSize="8sp"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="@color/event_times_color"
+        android:drawableStart="@drawable/icon_event_date"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="5dp"/>
+
+    <Button
+        android:id="@+id/my_event_detail_button"
+        android:layout_width="79.22dp"
+        android:layout_height="22dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/event_end_margin"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/detail_button_radius"
+        android:textAllCaps="false"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@color/orange"
+        android:textSize="10sp"
+        android:text="@string/detail"/>
+
+    <ImageView
+        android:id="@+id/my_event_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/event_end_margin"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/icon_event_calendar" />
+
 
 
 </RelativeLayout>
