@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewProfile">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/profile_view"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/toolbars_background"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_view"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="16sp"
+            android:layout_gravity="center"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/profile_view">
+
+        <ImageView
+            android:id="@+id/background_profile_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/no_photo"
+            android:scaleType="centerCrop"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/no_photo"
+            android:scaleType="centerCrop"
+            android:layout_below="@id/background_profile_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-60dp"/>
+
+        <TextView
+            android:id="@+id/name_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/orange"
+            android:layout_below="@id/profile_image"
+            android:text="@string/name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:id="@+id/address_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name_profile"
+            android:text="@string/address"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_regular"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/icon_address_black"
+            android:drawablePadding="10dp"
+            android:textColor="#494A4C"/>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line_color"
+            android:layout_below="@id/address_profile"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:id="@+id/text_about_us"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_us"
+            android:layout_below="@id/view1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textSize="16sp"
+            android:textColor="@color/about_color"
+            android:fontFamily="@font/roboto_medium"/>
+
+        <TextView
+            android:id="@+id/about_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/grey_border_radius"
+            android:layout_below="@id/text_about_us"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="@string/about_us"
+            android:gravity="center"
+            android:padding="10dp"/>
+
+        <RelativeLayout
+            android:id="@+id/contact_us_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/about_us"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/text_contact_us"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/contact_us"
+                android:textColor="@color/about_color"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_medium"
+                android:layout_centerHorizontal="true"/>
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@color/line_color" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@color/line_color" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/send_message_layout"
+            android:layout_width="250dp"
+            android:layout_height="27dp"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/contact_us_layout">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_send_message"
+                android:layout_gravity="center_vertical"/>
+
+            <Button
+                android:id="@+id/send_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"
+                android:text="@string/send_message"
+                android:textAllCaps="false"
+                android:textColor="@color/orange"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_regular"
+                android:background="@drawable/send_message_background"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="27dp"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_below="@id/send_message_layout">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_call"
+                android:layout_gravity="center_vertical"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"
+                android:text="@string/call"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/roboto_regular"
+                android:background="@drawable/call_button"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

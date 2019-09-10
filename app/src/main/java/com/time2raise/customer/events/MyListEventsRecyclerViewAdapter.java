@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,6 +55,33 @@ public class MyListEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyList
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
+        holder.nameEvent.setText(mValues.get(position).getName());
+        holder.eventDate.setText(mValues.get(position).getDate());
+
+        // Отслеживания на нажатия на кнопку detail для event-ов.
+        holder.eventDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
+                    // Информация о event-е идёк в EventClass в метод onListFragmentInteraction через класс ListEventsFragment.
+                    mListener.onListFragmentInteraction(holder.mItem);
+                }
+            }
+        });
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != mListener) {
+                    // Notify the active callbacks interface (the activity, if the
+                    // fragment is attached to one) that an item has been selected.
+                    mListener.onListFragmentInteraction(holder.mItem);
+                }
+            }
+        });
+
 
     }
 
@@ -67,6 +95,11 @@ public class MyListEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyList
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
+        final ImageView eventMainImage;
+        final TextView nameEvent;
+        final TextView eventStartEndTime;
+        final TextView eventDate;
+        final Button eventDetail;
 
 
         EventInformation mItem;
@@ -74,6 +107,12 @@ public class MyListEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyList
         ViewHolder(View view) {
             super(view);
             mView = view;
+            // Поля event-а.
+            eventMainImage = (ImageView) view.findViewById(R.id.event_main_image);
+            nameEvent = (TextView) view.findViewById(R.id.event_name);
+            eventStartEndTime = (TextView) view.findViewById(R.id.event_start_end_time);
+            eventDate = (TextView) view.findViewById(R.id.event_date);
+            eventDetail = (Button) view.findViewById(R.id.event_detail_button);
 
         }
 

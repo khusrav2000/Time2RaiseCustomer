@@ -70,7 +70,12 @@ public class VerificationCode extends AppCompatActivity implements View.OnClickL
 
         wrongCode = findViewById(R.id.wrong_code);
 
-
+        findViewById(R.id.obhod_enter_code).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startMain();
+            }
+        });
 
         for (int i = 0; i < 10; i++) {
             numbers[i].setOnClickListener(this);
@@ -190,5 +195,10 @@ public class VerificationCode extends AppCompatActivity implements View.OnClickL
                 fourthNumber.setText("");
             }
         }
+    }
+
+    private void startMain(){
+        Intent intent = new Intent(this, MainPageActivity.class);
+        startActivity(intent);
     }
 }

@@ -3,7 +3,7 @@ package com.time2raise.customer.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class Photo {
+public class Photo {
     @SerializedName("Url")
     @Expose
     private String url;

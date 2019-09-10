@@ -8,5 +8,5 @@
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
     tools:context=".orders.ListOngoingOrdersFragment"
-    android:background="@drawable/main_page_background"
+    android:background="@color/background_color"
     tools:listitem="@layout/fragment_ongoing_order_line" />

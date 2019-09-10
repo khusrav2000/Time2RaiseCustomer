@@ -53,4 +53,16 @@
     <string name="name_organizer">Name organizer</string>
     <string name="organizer_address">Organizer address</string>
     <string name="view_profile">View profile</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="name_restaurant">Name restaurant</string>
+    <string name="restaurant_address">Restaurant address</string>
+    <string name="about_event">About event</string>
+    <string name="place_and_order">Place and order</string>
+    <string name="profile_view">Profille view</string>
+    <string name="name">name</string>
+    <string name="address">address</string>
+    <string name="about_us">About us</string>
+    <string name="call">Call</string>
+    <string name="send_message">Send message</string>
+    <string name="contact_us">Contact us</string>
 </resources>

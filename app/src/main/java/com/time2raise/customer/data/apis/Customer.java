@@ -24,4 +24,7 @@ public interface Customer {
     @GET("api/customer/events/{limit}")
     Call< List<EventInformation> > getEvents(@Path("limit") int limit);
 
+    @GET("api/customer/event/{id}")
+    Call< EventInformation > getEventById(@Path("id") int id);
+
 }

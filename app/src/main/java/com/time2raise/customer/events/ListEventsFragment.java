@@ -73,9 +73,9 @@ public class ListEventsFragment extends Fragment  {
         View view = inflater.inflate(R.layout.fragment_events_list, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
+        if (view.findViewById(R.id.events_list) instanceof RecyclerView) {
             Context context = view.getContext();
-            recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view.findViewById(R.id.events_list);
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -115,19 +115,21 @@ public class ListEventsFragment extends Fragment  {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+
+
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(String item);
+        void onListFragmentInteraction(EventInformation item);
     }
 
     private void loadEvents(){
 
         // Загрузка списка event-ов с сервера.
         Retrofit retrofit = NetworkClient.getRetrofitClient();
-        Customer iOrganization = retrofit.create(Customer.class);
+        Customer customer = retrofit.create(Customer.class);
 
         // TODO: Поменять лимит для количество event-ов.
-        Call call = iOrganization.getEvents(25);
+        Call call = customer.getEvents(25);
 
         call.enqueue(new Callback() {
             @Override

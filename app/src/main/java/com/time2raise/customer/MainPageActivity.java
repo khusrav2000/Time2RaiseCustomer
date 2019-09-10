@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.time2raise.customer.data.model.EventInformation;
 import com.time2raise.customer.events.ListEventsFragment;
 import com.time2raise.customer.orders.ListOngoingOrdersFragment;
 import com.time2raise.customer.orders.ListPastOrdersFragment;
@@ -26,6 +27,7 @@ public class MainPageActivity extends AppCompatActivity implements
         ListOngoingOrdersFragment.OnListFragmentInteractionListener,
 
         ListEventsFragment.OnListFragmentInteractionListener {
+
     private ImageView profileIcon;
 
     Fragment listEventsFragment = new ListEventsFragment();
@@ -86,6 +88,17 @@ public class MainPageActivity extends AppCompatActivity implements
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onListFragmentInteraction(EventInformation item) {
+        Intent intent = new Intent(this, Event.class);
+
+        intent.putExtra("eventId", item.getEventId());
+        intent.putExtra("organizerId", item.getOrgId());
+        intent.putExtra("restaurantId", item.getRequestId());
+
+        startActivity(intent);
     }
 
     @Override
