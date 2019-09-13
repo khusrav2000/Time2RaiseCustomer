@@ -19,4 +19,5 @@
     <color name="about_color">#494A4C</color>
     <color name="food_name_color">#50555C</color>
     <color name="count_food_color">#494A4D</color>
+    <color name="menu_text_colors">#4B4B4D</color>
 </resources>

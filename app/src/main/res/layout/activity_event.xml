@@ -31,8 +31,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/event_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
             android:paddingBottom="100dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -314,6 +318,7 @@
                 android:textColor="#949191"/>
 
             <Button
+                android:id="@+id/place_and_order_button"
                 android:layout_width="169dp"
                 android:layout_height="43dp"
                 android:layout_gravity="center_horizontal"
@@ -323,6 +328,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"/>
         </LinearLayout>
+        </FrameLayout>
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

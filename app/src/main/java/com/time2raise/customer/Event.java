@@ -1,7 +1,9 @@
 package com.time2raise.customer;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +29,8 @@ import retrofit2.Call;
 import com.time2raise.customer.data.model.*;
 
 
-public class Event extends AppCompatActivity implements View.OnClickListener {
+public class Event extends AppCompatActivity implements View.OnClickListener,
+        PlaceAndOrderFragment.OnFragmentInteractionListener {
 
 
     Button viewOrganizerProfile;
@@ -41,6 +44,9 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
     TextView eventStartEndTime;
     ImageView eventImage;
     TextView eventAbout;
+    Button placeAndOrder;
+
+    PlaceAndOrderFragment placeAndOrderFragment = new PlaceAndOrderFragment();
 
     final String STORAGEURL = "https://drive.google.com/uc?export=download&id=";
 
@@ -56,9 +62,12 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
         eventStartEndTime       = findViewById(R.id.view_event_start_end_time);
         eventImage              = findViewById(R.id.view_event_image);
         eventAbout              = findViewById(R.id.view_event_about);
+        placeAndOrder           = findViewById(R.id.place_and_order_button);
+
 
 
         viewOrganizerProfile.setOnClickListener(this);
+        placeAndOrder.setOnClickListener(this);
 
         Intent intent = getIntent();
 
@@ -118,11 +127,26 @@ public class Event extends AppCompatActivity implements View.OnClickListener {
             case R.id.organizer_view_profile:
                 startViewProfileOrganizer();
                 break;
+            case R.id.place_and_order_button:
+                startPlaceAndOrder();
+                break;
         }
+    }
+
+    private void startPlaceAndOrder() {
+        System.out.println("-------------- Rabotaet ---------------------");
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.event_information, placeAndOrderFragment);
+        transaction.commit();
     }
 
     private void startViewProfileOrganizer() {
         Intent intent = new Intent(this, ViewProfile.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

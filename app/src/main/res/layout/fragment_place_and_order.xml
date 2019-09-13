@@ -37,8 +37,130 @@
             android:fontFamily="@font/roboto_bold"/>
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/full_menu"
+        android:textColor="@color/count_food_color"
+        android:layout_gravity="center_horizontal"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_medium"
+        android:layout_marginTop="10dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_side_or_app"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/side_or_appetizers"
+            android:textColor="@color/menu_text_colors"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginStart="10dp"
+            android:drawablePadding="10dp"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
 
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/line_color"
+        android:layout_marginTop="5dp"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_main_dishes"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_dishes"
+            android:textColor="@color/menu_text_colors"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginStart="10dp"
+            android:drawablePadding="10dp"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/line_color"
+        android:layout_marginTop="5dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_salad"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/salads"
+            android:textColor="@color/menu_text_colors"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginStart="10dp"
+            android:drawablePadding="10dp"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/line_color"
+        android:layout_marginTop="5dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_main_dishes"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/soups"
+            android:textColor="@color/menu_text_colors"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginStart="10dp"
+            android:drawablePadding="10dp"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@color/line_color"
+        android:layout_marginTop="5dp"/>
 
 
 </LinearLayout>
