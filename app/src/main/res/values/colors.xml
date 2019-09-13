@@ -17,4 +17,6 @@
     <color name="event_information_organizer_address">#C4C4C4</color>
     <color name="background_color">#fff7f7</color>
     <color name="about_color">#494A4C</color>
+    <color name="food_name_color">#50555C</color>
+    <color name="count_food_color">#494A4D</color>
 </resources>

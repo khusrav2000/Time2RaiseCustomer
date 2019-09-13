@@ -1,13 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="98dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
     android:layout_marginStart="20dp"
     android:layout_marginEnd="20dp"
     android:background="@drawable/event_request_background"
     android:elevation="3dp">
 
+    <LinearLayout
+        android:id="@+id/order_information"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:background="@drawable/order_line_top"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/order_icon"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:src="@drawable/photo"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="15dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="15dp">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="14sp"
+                android:textColor="#454648"/>
+
+            <TextView
+                android:id="@+id/order_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/last_seen"
+                android:textSize="10sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="end"
+            android:layout_marginEnd="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ongoing_order_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_id"
+                android:textColor="@color/orange"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total"
+                android:textColor="@color/green"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/foods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:columnCount="3"
+        android:orientation="vertical"
+        android:layout_below="@id/order_information"/>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"
+        android:layout_below="@id/foods"
+        android:layout_marginTop="10dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal">
+        
+        <Button
+            android:layout_width="113dp"
+            android:layout_height="22dp"
+            android:text="@string/cancel_order"
+            android:textAllCaps="false"
+            android:textSize="10sp"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/orange"
+            android:background="@drawable/cancel_order_background"/>
+
+        <Button
+            android:layout_width="113dp"
+            android:layout_height="22dp"
+            android:text="@string/track_order"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/track_order_background"/>
+    </LinearLayout>
 
 
 </RelativeLayout>

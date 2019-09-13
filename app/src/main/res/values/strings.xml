@@ -65,4 +65,9 @@
     <string name="call">Call</string>
     <string name="send_message">Send message</string>
     <string name="contact_us">Contact us</string>
+    <string name="last_seen">last seen</string>
+    <string name="order_id">Order id: -</string>
+    <string name="total">Total: -</string>
+    <string name="cancel_order">Cancel order</string>
+    <string name="track_order">Track Order</string>
 </resources>

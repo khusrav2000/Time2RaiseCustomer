@@ -1,6 +1,7 @@
 package com.time2raise.customer.orders;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,6 +14,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.time2raise.customer.R;
+import com.time2raise.customer.data.NetworkClient;
+import com.time2raise.customer.data.apis.Customer;
+import com.time2raise.customer.data.model.Order;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -37,6 +41,12 @@ public class ListPastOrdersFragment extends Fragment  {
     private int mColumnCount = 1;
     private ListPastOrdersFragment.OnListFragmentInteractionListener mListener;
     RecyclerView recyclerView;
+
+    public static final String APP_PREFERENCES = "SkipLoginPhone";
+
+    public static final String APP_PREFERENCES_PHONE= "getPhone";
+    public static final String APP_TOKEN = "getToken";
+    SharedPreferences skipLoginPhone;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -117,13 +127,37 @@ public class ListPastOrdersFragment extends Fragment  {
     }
 
     private void loadPastOrders(){
-        setAdapter("1");
+        skipLoginPhone = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        String token = skipLoginPhone.getString(APP_TOKEN, "");
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient();
+        Customer customer = retrofit.create(Customer.class);
+
+        Call call = customer.getPastOrders(token, 25);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.isSuccessful()){
+                    List<Order> orderList = (List<Order>) response.body();
+                    System.out.println("------------------ ongoing orders are loaded --------------------");
+                    try {
+                        System.out.println("-----------" + orderList.size() + "------------------");
+                    } catch (Exception e){
+                        System.out.println("EXCEPTION");
+                    }
+                    setAdapter(orderList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
     }
 
-    private void setAdapter(String ord){
-        List<String> list = new LinkedList<>();
-        list.add("1");
-        list.add("2");
-        recyclerView.setAdapter(new MyListPastOrdersRecyclerViewAdapter(list, mListener));
+    private void setAdapter(List<Order> orders){
+        recyclerView.setAdapter(new MyListPastOrdersRecyclerViewAdapter(orders, mListener));
     }
 }

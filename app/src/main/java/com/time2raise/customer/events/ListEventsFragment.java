@@ -1,6 +1,7 @@
 package com.time2raise.customer.events;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -41,6 +42,13 @@ public class ListEventsFragment extends Fragment  {
     private OnListFragmentInteractionListener mListener;
     RecyclerView recyclerView;
 
+    public static final String APP_PREFERENCES = "SkipLoginPhone";
+
+    public static final String APP_PREFERENCES_PHONE= "getPhone";
+    public static final String APP_TOKEN = "getToken";
+    SharedPreferences skipLoginPhone;
+
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -61,7 +69,6 @@ public class ListEventsFragment extends Fragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -122,14 +129,19 @@ public class ListEventsFragment extends Fragment  {
         void onListFragmentInteraction(EventInformation item);
     }
 
+
+
     private void loadEvents(){
+        skipLoginPhone = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        String token = skipLoginPhone.getString(APP_TOKEN, "");
+
 
         // Загрузка списка event-ов с сервера.
         Retrofit retrofit = NetworkClient.getRetrofitClient();
         Customer customer = retrofit.create(Customer.class);
 
         // TODO: Поменять лимит для количество event-ов.
-        Call call = customer.getEvents(25);
+        Call call = customer.getEvents(token,25);
 
         call.enqueue(new Callback() {
             @Override

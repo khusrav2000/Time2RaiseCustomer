@@ -1,11 +1,25 @@
 package com.time2raise.customer.orders;
 
+import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.time2raise.customer.R;
+import com.time2raise.customer.data.model.Order;
+import com.time2raise.customer.data.model.OrderInformation;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -25,10 +39,10 @@ public class MyListOngoingOrdersRecyclerViewAdapter extends RecyclerView.Adapter
     // Ссылка на хранилище фотографий этого проета.
     // Фотографии находяться в GoogleDrive-е.
     String StorageUrl = "https://drive.google.com/uc?export=download&id=";
-    List<String> mValues;
+    List<Order> mValues;
     View getContexts;
 
-    public MyListOngoingOrdersRecyclerViewAdapter(List<String> items, ListOngoingOrdersFragment.OnListFragmentInteractionListener listener) {
+    public MyListOngoingOrdersRecyclerViewAdapter(List<Order> items, ListOngoingOrdersFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -43,9 +57,36 @@ public class MyListOngoingOrdersRecyclerViewAdapter extends RecyclerView.Adapter
         return new MyListOngoingOrdersRecyclerViewAdapter.ViewHolder(view);
     }
 
+
     @Override
-    public void onBindViewHolder(final MyListOngoingOrdersRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
+
+        holder.orderId.setText("Order id: " + holder.mItem.getOrderId());
+        holder.date.setText(holder.mItem.getCreateDate());
+        holder.totalPrice.setText("$ " + String.valueOf(holder.mItem.getTotalPrice()));
+
+        List<OrderInformation> orderInformationList = holder.mItem.getOrderInformationList();
+        LayoutInflater inflater = LayoutInflater.from(holder.mView.getContext());
+        if (orderInformationList != null){
+            for (int i = 0 ; i < orderInformationList.size(); i++){
+
+                View view = inflater.inflate(R.layout.food_information, holder.listFoods, false);
+
+                TextView foodName = view.findViewById(R.id.food_name);
+                foodName.setText(orderInformationList.get(i).getFoodName());
+
+                TextView foodCount = view.findViewById(R.id.food_count);
+                foodCount.setText("Qty: " + orderInformationList.get(i).getAmount());;
+
+                TextView foodPrice = view.findViewById(R.id.food_price);
+                foodPrice.setText("$ " + orderInformationList.get(i).getPrice());
+
+                holder.listFoods.addView(view);
+
+
+            }
+        }
 
 
     }
@@ -61,11 +102,21 @@ public class MyListOngoingOrdersRecyclerViewAdapter extends RecyclerView.Adapter
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
 
-        String mItem;
+        Order mItem;
+
+        TextView orderId;
+        TextView date;
+        TextView totalPrice;
+        LinearLayout listFoods;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
+
+            orderId = view.findViewById(R.id.ongoing_order_id);
+            totalPrice = view.findViewById(R.id.total_price);
+            date = view.findViewById(R.id.order_date);
+            listFoods = view.findViewById(R.id.foods);
 
         }
 

@@ -19,6 +19,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import com.time2raise.customer.data.model.Message;
+
 public class VerificationCode extends AppCompatActivity implements View.OnClickListener {
 
     // Все кнопки от нуля до девяти.
@@ -38,6 +40,7 @@ public class VerificationCode extends AppCompatActivity implements View.OnClickL
     public static final String APP_PREFERENCES = "SkipLoginPhone";
 
     public static final String APP_PREFERENCES_PHONE= "getPhone";
+    public static final String APP_TOKEN = "getToken";
 
     SharedPreferences skipLoginPhone;
 
@@ -153,8 +156,9 @@ public class VerificationCode extends AppCompatActivity implements View.OnClickL
             public void onResponse(Call call, Response response) {
                 if (response.code() == 200){
                     System.out.println("YES-----------------------------------------------");
+                    Message message = (Message) response.body();
                     // Если оба код-а совпадают, то откроется страница заполнения данных о пользователе.
-                    startProfileActivity();
+                    startProfileActivity(message);
                 }else {
                     // Если нет, то всплывает сообщения об не совпадении код-ов.
                     wrongCode.setVisibility(View.VISIBLE);
@@ -168,12 +172,15 @@ public class VerificationCode extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    private void startProfileActivity() {
+    private void startProfileActivity(Message message) {
 
         // Перед тем, как перейти в профиль данные о входе по этому номеру сохраняется в Preference.
         SharedPreferences.Editor editor = skipLoginPhone.edit();
         editor.putString(APP_PREFERENCES_PHONE, phone);
+        editor.putString(APP_TOKEN, message.getMassage());
         editor.apply();
+
+        System.out.println(message.getMassage());
 
         Intent intent = new Intent(this, Profile.class);
         startActivity(intent);

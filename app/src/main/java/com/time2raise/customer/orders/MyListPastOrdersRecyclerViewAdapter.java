@@ -5,10 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
 import com.time2raise.customer.R;
+import com.time2raise.customer.data.model.Order;
+import com.time2raise.customer.data.model.OrderInformation;
 
 import java.nio.Buffer;
 import java.text.ParseException;
@@ -24,7 +27,7 @@ import java.util.List;
 public class MyListPastOrdersRecyclerViewAdapter extends RecyclerView.Adapter<MyListPastOrdersRecyclerViewAdapter.ViewHolder> {
 
 
-    private final List<String > mValues;
+    private final List<Order > mValues;
 
     private final ListPastOrdersFragment.OnListFragmentInteractionListener mListener;
 
@@ -34,8 +37,8 @@ public class MyListPastOrdersRecyclerViewAdapter extends RecyclerView.Adapter<My
     View getContexts;
 
 
-    public MyListPastOrdersRecyclerViewAdapter(List<String> requests, ListPastOrdersFragment.OnListFragmentInteractionListener listener) {
-        mValues = requests;
+    public MyListPastOrdersRecyclerViewAdapter(List<Order> orders, ListPastOrdersFragment.OnListFragmentInteractionListener listener) {
+        mValues = orders;
         mListener = listener;
 
     }
@@ -56,6 +59,31 @@ public class MyListPastOrdersRecyclerViewAdapter extends RecyclerView.Adapter<My
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
+        holder.orderId.setText("Order id: " + holder.mItem.getOrderId());
+        holder.date.setText(holder.mItem.getCreateDate());
+        holder.totalPrice.setText("$ " + String.valueOf(holder.mItem.getTotalPrice()));
+
+        List<OrderInformation> orderInformationList = holder.mItem.getOrderInformationList();
+        LayoutInflater inflater = LayoutInflater.from(holder.mView.getContext());
+        if (orderInformationList != null){
+            for (int i = 0 ; i < orderInformationList.size(); i++){
+
+                View view = inflater.inflate(R.layout.food_information, holder.listFoods, false);
+
+                TextView foodName = view.findViewById(R.id.food_name);
+                foodName.setText(orderInformationList.get(i).getFoodName());
+
+                TextView foodCount = view.findViewById(R.id.food_count);
+                foodCount.setText("Qty: " + orderInformationList.get(i).getAmount());;
+
+                TextView foodPrice = view.findViewById(R.id.food_price);
+                foodPrice.setText("$ " + orderInformationList.get(i).getPrice());
+
+                holder.listFoods.addView(view);
+
+            }
+        }
+
     }
 
     // Получения количество event-ов с списке.
@@ -69,18 +97,27 @@ public class MyListPastOrdersRecyclerViewAdapter extends RecyclerView.Adapter<My
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
 
+        Order mItem;
 
-        public String mItem;
+        TextView orderId;
+        TextView date;
+        TextView totalPrice;
+        LinearLayout listFoods;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
 
+            orderId = view.findViewById(R.id.ongoing_order_id);
+            totalPrice = view.findViewById(R.id.total_price);
+            date = view.findViewById(R.id.order_date);
+            listFoods = view.findViewById(R.id.foods);
+
         }
 
         @Override
         public String toString() {
-            return "2";
+            return "1";
         }
     }
 }
