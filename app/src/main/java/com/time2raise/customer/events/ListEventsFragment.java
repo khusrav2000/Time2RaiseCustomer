@@ -15,6 +15,7 @@ import com.time2raise.customer.R;
 import com.time2raise.customer.data.NetworkClient;
 import com.time2raise.customer.data.apis.Customer;
 import com.time2raise.customer.data.model.EventInformation;
+import com.time2raise.customer.data.model.Message;
 import com.time2raise.customer.orders.ListOngoingOrdersFragment;
 
 import java.util.EventListener;
@@ -47,6 +48,8 @@ public class ListEventsFragment extends Fragment  {
     public static final String APP_PREFERENCES_PHONE= "getPhone";
     public static final String APP_TOKEN = "getToken";
     SharedPreferences skipLoginPhone;
+
+    String token;
 
 
     /**
@@ -133,7 +136,7 @@ public class ListEventsFragment extends Fragment  {
 
     private void loadEvents(){
         skipLoginPhone = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        String token = skipLoginPhone.getString(APP_TOKEN, "");
+        token = skipLoginPhone.getString(APP_TOKEN, "");
 
 
         // Загрузка списка event-ов с сервера.
@@ -146,11 +149,44 @@ public class ListEventsFragment extends Fragment  {
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-
+                System.out.println("----------------------" + response.code());
                 if (response.isSuccessful()) {
                     List<EventInformation> events = (List<EventInformation>) response.body();
                     System.out.println("----------------Events are loaded ---------------------------");
                     setAdapter(events);
+                } else if(response.code() == 400){
+                    updateToken();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void updateToken(){
+        skipLoginPhone = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient();
+        Customer customer = retrofit.create(Customer.class);
+
+
+        Call call = customer.getNewToken(token);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.isSuccessful()){
+                    Message message = (Message) response.body();
+                    String newToken = message.getMassage();
+                    SharedPreferences.Editor editor = skipLoginPhone.edit();
+                    editor.putString(APP_TOKEN, newToken);
+                    editor.apply();
+                    loadEvents();
                 }
             }
 

@@ -182,6 +182,7 @@
                 android:layout_gravity="center_vertical"/>
 
             <Button
+                android:id="@+id/call_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"

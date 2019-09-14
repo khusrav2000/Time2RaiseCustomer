@@ -75,4 +75,12 @@
     <string name="main_dishes">Main Dishes or Entrees</string>
     <string name="salads">Salads</string>
     <string name="soups">Soups</string>
+    <string name="calzones">Calzones</string>
+    <string name="dessert_or_sweets">Dessert or Sweets</string>
+    <string name="sips_or_beverages">Sips or Beverages</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="deals">Deals</string>
+    <string name="chef_special">Chef special</string>
+    <string name="logout">Logout</string>
+    <string name="error_first_name">Fill in the field.</string>
 </resources>

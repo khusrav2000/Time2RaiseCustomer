@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context=".Profile">
+    tools:context=".FillProfileInformation">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -149,7 +148,7 @@
                     android:textColor="@color/profile_text_color_black"
                     android:textSize="14sp" />
             </RelativeLayout>
-            
+
             <Button
                 android:id="@+id/save_profile_information"
                 android:layout_width="289dp"
@@ -163,19 +162,7 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/roboto_medium"/>
 
-            <Button
-                android:id="@+id/logout"
-                android:layout_width="289dp"
-                android:layout_height="43dp"
-                android:background="@drawable/logout_button_background"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:text="@string/logout"
-                android:textColor="@color/orange"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:fontFamily="@font/roboto_medium"/>
-
         </LinearLayout>
     </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

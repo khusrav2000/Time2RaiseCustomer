@@ -182,7 +182,7 @@ public class VerificationCode extends AppCompatActivity implements View.OnClickL
 
         System.out.println(message.getMassage());
 
-        Intent intent = new Intent(this, Profile.class);
+        Intent intent = new Intent(this, FillProfileInformation.class);
         startActivity(intent);
     }
 
