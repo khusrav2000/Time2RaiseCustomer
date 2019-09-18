@@ -1,7 +1,6 @@
 package com.time2raise.customer;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -12,10 +11,9 @@ import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 
-import com.time2raise.customer.data.model.EventInformation;
+import com.time2raise.customer.data.model.EventInf;
 import com.time2raise.customer.events.ListEventsFragment;
 import com.time2raise.customer.orders.ListOngoingOrdersFragment;
 import com.time2raise.customer.orders.ListPastOrdersFragment;
@@ -91,13 +89,9 @@ public class MainPageActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onListFragmentInteraction(EventInformation item) {
+    public void onListFragmentInteraction(EventInf item) {
         Intent intent = new Intent(this, Event.class);
-
         intent.putExtra("eventId", item.getEventId());
-        intent.putExtra("organizerId", item.getOrgId());
-        intent.putExtra("restaurantId", item.getRequestId());
-
         startActivity(intent);
     }
 

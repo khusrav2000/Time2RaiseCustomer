@@ -140,7 +140,7 @@ public class ListPastOrdersFragment extends Fragment  {
             public void onResponse(Call call, Response response) {
                 if (response.isSuccessful()){
                     List<Order> orderList = (List<Order>) response.body();
-                    System.out.println("------------------ ongoing orders are loaded --------------------");
+                    System.out.println("------------------ past orders are loaded --------------------");
                     try {
                         System.out.println("-----------" + orderList.size() + "------------------");
                     } catch (Exception e){

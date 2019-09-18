@@ -74,7 +74,7 @@ public class MyListOngoingOrdersRecyclerViewAdapter extends RecyclerView.Adapter
                 View view = inflater.inflate(R.layout.food_information, holder.listFoods, false);
 
                 TextView foodName = view.findViewById(R.id.food_name);
-                foodName.setText(orderInformationList.get(i).getFoodName());
+                foodName.setText(orderInformationList.get(i).getFoodName() + "(" + orderInformationList.get(i).getFoodSizeName() + ")");
 
                 TextView foodCount = view.findViewById(R.id.food_count);
                 foodCount.setText("Qty: " + orderInformationList.get(i).getAmount());;

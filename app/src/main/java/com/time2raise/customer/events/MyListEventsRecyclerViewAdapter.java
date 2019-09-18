@@ -8,13 +8,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.time2raise.customer.R;
-import com.time2raise.customer.data.model.EventInformation;
+import com.time2raise.customer.data.model.EventInf;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,7 +22,7 @@ public class MyListEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyList
 
     // Список event-ов, которые мы получаем из сервера.
     // Events - Это модель для помещения в него получаемых данных из сервера.
-    private final List<EventInformation> mValues;
+    private final List<EventInf> mValues;
 
     private final ListEventsFragment.OnListFragmentInteractionListener mListener;
 
@@ -36,7 +32,7 @@ public class MyListEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyList
 
     View getContexts;
 
-    public MyListEventsRecyclerViewAdapter(List<EventInformation> items, ListEventsFragment.OnListFragmentInteractionListener listener) {
+    public MyListEventsRecyclerViewAdapter(List<EventInf> items, ListEventsFragment.OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -55,6 +51,7 @@ public class MyListEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyList
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
+        System.out.println("id : "+ mValues.get(position).getEventId() + "name: " + mValues.get(position).getName());
         holder.nameEvent.setText(mValues.get(position).getName());
         holder.eventDate.setText(mValues.get(position).getDate());
 
@@ -102,7 +99,7 @@ public class MyListEventsRecyclerViewAdapter extends RecyclerView.Adapter<MyList
         final Button eventDetail;
 
 
-        EventInformation mItem;
+        EventInf mItem;
 
         ViewHolder(View view) {
             super(view);

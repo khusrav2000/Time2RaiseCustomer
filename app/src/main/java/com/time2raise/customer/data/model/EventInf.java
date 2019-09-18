@@ -6,7 +6,7 @@ import com.time2raise.customer.events.ListEventsFragment;
 
 import java.util.List;
 
-public class EventInformation {
+public class EventInf {
     @SerializedName("EventId")
     @Expose
     private int eventId;
@@ -43,7 +43,7 @@ public class EventInformation {
     @Expose
     private List<Photo> photo;
 
-    public EventInformation(int eventId, int orgId, int requestId, String name, String date, String start, String end, String about, List<Photo> photo) {
+    public EventInf(int eventId, int orgId, int requestId, String name, String date, String start, String end, String about, List<Photo> photo) {
         this.eventId = eventId;
         this.orgId = orgId;
         this.requestId = requestId;
@@ -129,7 +129,7 @@ public class EventInformation {
 
     @Override
     public String toString() {
-        return "EventInformation{" +
+        return "EventInf{" +
                 "eventId=" + eventId +
                 ", orgId=" + orgId +
                 ", requestId=" + requestId +

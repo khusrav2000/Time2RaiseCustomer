@@ -1,13 +1,12 @@
 package com.time2raise.customer.data.apis;
 
-import android.support.v4.content.res.FontResourcesParserCompat;
-
-import com.time2raise.customer.Event;
 import com.time2raise.customer.data.model.CustomerInformation;
-import com.time2raise.customer.data.model.EventInformation;
+import com.time2raise.customer.data.model.EventDetailed;
+import com.time2raise.customer.data.model.EventInf;
 import com.time2raise.customer.data.model.Message;
 import com.time2raise.customer.data.model.Order;
 import com.time2raise.customer.data.model.OrganizerInformation;
+import com.time2raise.customer.data.model.ResFood;
 import com.time2raise.customer.data.model.RestaurantInformation;
 
 import java.util.List;
@@ -37,11 +36,11 @@ public interface Customer {
 
     // Загрузка event-ов в количестве по заданному лимиту.
     @GET("api/customer/events/{limit}")
-    Call< List<EventInformation> > getEvents(@Header ("token") String token, @Path("limit") int limit);
+    Call< List<EventInf> > getEvents(@Header ("token") String token, @Path("limit") int limit);
 
     // Получения данные о "событии" по id.
     @GET("api/customer/event/{id}")
-    Call< EventInformation > getEventById(@Header("token") String token, @Path("id") int id);
+    Call<EventDetailed> getEventById(@Header("token") String token, @Path("id") int id);
 
     // Загрузка ongoingOrders в количестве limit штук.
     @GET("api/customer/order/ongoing/{limit}")
@@ -74,4 +73,12 @@ public interface Customer {
     // Получения информации о профиле клиента по токену.
     @GET("api/customer/profil")
     Call<CustomerInformation> getCustomerProfileById(@Header("token") String token);
+
+    // Получения списка меню какого-то ресторана по его id и по категории еди.
+    @GET("api/customer/foods/{res_id}/{category_id}")
+    Call<List<ResFood> > getFoodsByResIdAndCategory(@Header("token") String token,
+                                                    @Path("res_id") int resId,
+                                                    @Path("category_id") int categoryId);
+
+
 }

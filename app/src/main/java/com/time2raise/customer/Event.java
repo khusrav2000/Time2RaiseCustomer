@@ -11,28 +11,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
-import com.time2raise.customer.data.NetworkClient;
-import com.time2raise.customer.data.apis.Customer;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.Call;
-
-import com.time2raise.customer.data.model.*;
 
 
 public class Event extends AppCompatActivity implements
         PlaceAndOrderFragment.OnFragmentInteractionListener,
-        EventInformation.OnFragmentInteractionListener {
+        EventInformation.OnFragmentInteractionListener,
+        PickFoodsByCategoryIdFragment.OnFragmentInteractionListener {
 
 
     ImageView iconProfile;
@@ -42,6 +26,7 @@ public class Event extends AppCompatActivity implements
 
     PlaceAndOrderFragment placeAndOrderFragment = new PlaceAndOrderFragment();
     com.time2raise.customer.EventInformation eventInformation = new com.time2raise.customer.EventInformation();
+    PickFoodsByCategoryIdFragment pickFoodsByCategoryIdFragment = new PickFoodsByCategoryIdFragment();
 
 
 
@@ -107,5 +92,13 @@ public class Event extends AppCompatActivity implements
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void openGetFoodByCategoryId(int categoryId){
+        pickFoodsByCategoryIdFragment.newInstance(categoryId, eventId);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.event_information, pickFoodsByCategoryIdFragment);
+        transaction.commit();
     }
 }

@@ -15,11 +15,11 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.time2raise.customer.data.NetworkClient;
 import com.time2raise.customer.data.apis.Customer;
+import com.time2raise.customer.data.model.EventDetailed;
+import com.time2raise.customer.data.model.EventInf;
 import com.time2raise.customer.data.model.OrganizerInformation;
 import com.time2raise.customer.data.model.Photo;
 import com.time2raise.customer.data.model.RestaurantInformation;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -122,7 +122,7 @@ public class EventInformation extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call call, Response response) {
                 if (response.isSuccessful()) {
-                    setEventInformation((com.time2raise.customer.data.model.EventInformation) response.body());
+                    setEventInformation((EventDetailed) response.body());
                 }
             }
 
@@ -163,7 +163,7 @@ public class EventInformation extends Fragment implements View.OnClickListener {
         mListener = null;
     }
 
-    private void setEventInformation(com.time2raise.customer.data.model.EventInformation event) {
+    private void setEventInformation(EventDetailed event) {
         eventName.setText(event.getName());
         eventDate.setText(event.getDate());
         eventStartEndTime.setText(event.getStart() + event.getEnd());
@@ -189,71 +189,34 @@ public class EventInformation extends Fragment implements View.OnClickListener {
                     .into(eventImage);
 
 
-        // Получения информации об организаторе по id.
-        Call callOrg = customer.getOrganizerById(token, event.getOrgId());
-        callOrg.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                System.out.println("Organization Code - " + response.code());
-                if (response.isSuccessful()) {
-                    setOrganizerInformation((com.time2raise.customer.data.model.OrganizerInformation) response.body());
-                }
-            }
+        // Сохранения информации о ресторане.
+        restaurantId = event.getResId();
 
-            @Override
-            public void onFailure(Call call, Throwable t) {
-
-            }
-        });
-
-        // Получения информации об ресторане по id.
-        Call callRes = customer.getRestaurantById(token, event.getRequestId());
-        callRes.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                System.out.println(response.code());
-                if (response.isSuccessful()) {
-                    setRestaurantInformation((com.time2raise.customer.data.model.RestaurantInformation) response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-
-            }
-        });
-
-    }
-
-    private void setRestaurantInformation(RestaurantInformation restaurantInformation) {
-        restaurantId = restaurantInformation.getOrgId();
-
-        Picasso picasso = Picasso.get();
-        picasso.load(STORAGE_URL + restaurantInformation.getIconUrl())
+        picasso.load(STORAGE_URL + event.getResProfileIconUrl())
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.photo)
                 .error(R.drawable.photo)
                 .into(restaurantIconProfile);
 
-        restaurantName.setText(restaurantInformation.getName());
-        restaurantAddress.setText(restaurantInformation.getAddress());
-    }
+        restaurantName.setText(event.getResName());
+        //restaurantAddress.setText(event.getRes);
 
-    private void setOrganizerInformation(OrganizerInformation organizerInformation) {
-        organizerId = organizerInformation.getInitId();
+        // Сохранения информации, о организаторе.
+
+        organizerId = event.getInitId();
 
         System.out.println("----------Organization Information are loaded!--------");
-        Picasso picasso = Picasso.get();
-        picasso.load(STORAGE_URL + organizerInformation.getIconUrl())
+        picasso.load(STORAGE_URL + event.getInitProfileIconUrl())
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.photo)
                 .error(R.drawable.photo)
                 .into(organizerIconProfile);
 
-        organizerName.setText(organizerInformation.getName());
-        organizerAddress.setText(organizerInformation.getAddress());
+        organizerName.setText(event.getInitName());
+        //organizerAddress.setText(event.getAddress());
+
     }
 
     @Override
@@ -277,7 +240,7 @@ public class EventInformation extends Fragment implements View.OnClickListener {
 
         // Все нижеперечисленные интерфейсы буду реализованы в классе Event.
         void startPlaceAndOrder();      // Интерфейс для запуска выбора категорий еди.
-        void startViewProfileOrganizer(int organizationId); // Интерфейс для запуска профиля организатора.
+        void startViewProfileOrganizer(int organizerId); // Интерфейс для запуска профиля организатора.
         void startViewProfileRestaurant(int restaurantId); // Интерфейс для запуска профиля ресторана
     }
 }

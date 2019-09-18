@@ -14,12 +14,9 @@ import android.view.ViewGroup;
 import com.time2raise.customer.R;
 import com.time2raise.customer.data.NetworkClient;
 import com.time2raise.customer.data.apis.Customer;
-import com.time2raise.customer.data.model.EventInformation;
+import com.time2raise.customer.data.model.EventInf;
 import com.time2raise.customer.data.model.Message;
-import com.time2raise.customer.orders.ListOngoingOrdersFragment;
 
-import java.util.EventListener;
-import java.util.LinkedList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -129,7 +126,7 @@ public class ListEventsFragment extends Fragment  {
 
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(EventInformation item);
+        void onListFragmentInteraction(EventInf item);
     }
 
 
@@ -144,14 +141,14 @@ public class ListEventsFragment extends Fragment  {
         Customer customer = retrofit.create(Customer.class);
 
         // TODO: Поменять лимит для количество event-ов.
-        Call call = customer.getEvents(token,25);
+        Call call = customer.getEvents(token,100);
 
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 System.out.println("----------------------" + response.code());
                 if (response.isSuccessful()) {
-                    List<EventInformation> events = (List<EventInformation>) response.body();
+                    List<EventInf> events = (List<EventInf>) response.body();
                     System.out.println("----------------Events are loaded ---------------------------");
                     setAdapter(events);
                 } else if(response.code() == 400){
@@ -198,7 +195,7 @@ public class ListEventsFragment extends Fragment  {
 
     }
 
-    private void setAdapter(List<EventInformation> events){
+    private void setAdapter(List<EventInf> events){
         recyclerView.setAdapter(new MyListEventsRecyclerViewAdapter(events, mListener));
     }
 }
