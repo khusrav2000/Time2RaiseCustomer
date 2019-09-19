@@ -5,15 +5,22 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.time2raise.customer.data.NetworkClient;
 import com.time2raise.customer.data.apis.Customer;
 import com.time2raise.customer.data.model.EventDetailed;
 import com.time2raise.customer.data.model.EventInf;
+import com.time2raise.customer.data.model.FoodSizesInformation;
 import com.time2raise.customer.data.model.ResFood;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -42,6 +49,8 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
     public static final String APP_PREFERENCES_PHONE= "getPhone";
     public static final String APP_TOKEN = "getToken";
     SharedPreferences skipLoginPhone;
+
+    LinearLayout layoutFoodsList;
 
     List<ResFood> foods;
 
@@ -75,9 +84,12 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
         token = skipLoginPhone.getString(APP_TOKEN, "");
 
         System.out.println("--------------" + categoryId);
+
+        layoutFoodsList = view.findViewById(R.id.layout_foods_list);
         getRestaurantId();
         return view;
     }
+
 
     private void loadFoods(int restaurantId) {
 
@@ -86,27 +98,77 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
 
         Call call = customer.getFoodsByResIdAndCategory(token, restaurantId, categoryId);
 
+        System.out.println("Идеально");
+
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                System.out.println("RESSS -    - - - -- - - -" + response.code());
                 if (response.isSuccessful()){
                     List<ResFood> resFoods = (List<ResFood>) response.body();
                     for (ResFood resFood : resFoods) {
                         System.out.println("--------------" + resFood.getFoodName());
                     }
+
+                    startShowFoodsToPick(resFoods);
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-
+                System.out.println("Ffffffffffffffffffffffff");
+                t.printStackTrace();
             }
         });
     }
 
+    private void startShowFoodsToPick(List<ResFood> resFoods) {
+        for (ResFood resFood : resFoods){
+            RelativeLayout food = new RelativeLayout(getContext());
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            food.setLayoutParams(params);
+
+
+
+            TextView foodName = new TextView(getContext());
+
+            RelativeLayout.LayoutParams foodNameParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            foodName.setLayoutParams(foodNameParams);
+            foodName.setText(resFood.getFoodName());
+
+            food.addView(foodName);
+
+            TextView foodPrice = new TextView(getContext());
+
+            RelativeLayout.LayoutParams foodPriceParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            foodPriceParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            foodPrice.setLayoutParams(foodPriceParams);
+
+
+            List<FoodSizesInformation> foodSizesInformation = resFood.getFoodSizesInformation();
+
+            foodPrice.setText("+ $" + foodSizesInformation.get(0).getPrice());
+
+            food.addView(foodPrice);
+
+            layoutFoodsList.addView(food);
+
+        }
+    }
+
     private void getRestaurantId() {
-        System.out.println("Evet id: " + eventId);
         Retrofit retrofit = NetworkClient.getRetrofitClient();
         Customer customer = retrofit.create(Customer.class);
 
@@ -116,7 +178,7 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
             public void onResponse(Call call, Response response) {
                 if (response.isSuccessful()){
                     EventDetailed eventInformation = (EventDetailed) response.body();
-                    loadFoods(eventInformation.getInitId());
+                    loadFoods(eventInformation.getRestaurantInfo().getResId());
                 }
             }
 

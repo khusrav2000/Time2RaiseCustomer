@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-class FoodSizesInformation {
+public class FoodSizesInformation {
     @SerializedName("FoodInfoID")
     @Expose
     private int foodId;
@@ -16,7 +16,7 @@ class FoodSizesInformation {
 
     @SerializedName("Size")
     @Expose
-    private List<FoodSize> foodSizes;
+    private FoodSize foodSizes;
 
     @SerializedName("CookTime")
     @Expose
@@ -30,7 +30,7 @@ class FoodSizesInformation {
     @Expose
     private double price;
 
-    public FoodSizesInformation(int foodId, int orgFoodId, List<FoodSize> foodSizes, String cookTime, String packingTime, double price) {
+    public FoodSizesInformation(int foodId, int orgFoodId, FoodSize foodSizes, String cookTime, String packingTime, double price) {
         this.foodId = foodId;
         this.orgFoodId = orgFoodId;
         this.foodSizes = foodSizes;
@@ -55,11 +55,11 @@ class FoodSizesInformation {
         this.orgFoodId = orgFoodId;
     }
 
-    public List<FoodSize> getFoodSizes() {
+    public FoodSize getFoodSizes() {
         return foodSizes;
     }
 
-    public void setFoodSizes(List<FoodSize> foodSizes) {
+    public void setFoodSizes(FoodSize foodSizes) {
         this.foodSizes = foodSizes;
     }
 

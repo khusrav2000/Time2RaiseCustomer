@@ -17,10 +17,13 @@ import com.time2raise.customer.data.NetworkClient;
 import com.time2raise.customer.data.apis.Customer;
 import com.time2raise.customer.data.model.EventDetailed;
 import com.time2raise.customer.data.model.EventInf;
+import com.time2raise.customer.data.model.InitiatorDetailed;
 import com.time2raise.customer.data.model.OrganizerInformation;
 import com.time2raise.customer.data.model.Photo;
+import com.time2raise.customer.data.model.RestaurantDetailed;
 import com.time2raise.customer.data.model.RestaurantInformation;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 import retrofit2.Call;
@@ -190,32 +193,37 @@ public class EventInformation extends Fragment implements View.OnClickListener {
 
 
         // Сохранения информации о ресторане.
-        restaurantId = event.getResId();
+        RestaurantDetailed restaurantDetailed = event.getRestaurantInfo();
+        restaurantId = restaurantDetailed.getResId();
 
-        picasso.load(STORAGE_URL + event.getResProfileIconUrl())
+
+        picasso.load(STORAGE_URL + restaurantDetailed.getIcon())
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.photo)
                 .error(R.drawable.photo)
                 .into(restaurantIconProfile);
 
-        restaurantName.setText(event.getResName());
-        //restaurantAddress.setText(event.getRes);
+        restaurantName.setText(restaurantDetailed.getName());
+        restaurantAddress.setText(restaurantDetailed.getAddress());
 
         // Сохранения информации, о организаторе.
 
-        organizerId = event.getInitId();
+        InitiatorDetailed initiatorDetailed = event.getInitiatorInfo();
+        organizerId = initiatorDetailed.getInitId();
+
+        System.out.println(" idesssssssssssssssssssss : " + restaurantId + " -- " + organizerId);
 
         System.out.println("----------Organization Information are loaded!--------");
-        picasso.load(STORAGE_URL + event.getInitProfileIconUrl())
+        picasso.load(STORAGE_URL + initiatorDetailed.getIcon())
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.photo)
                 .error(R.drawable.photo)
                 .into(organizerIconProfile);
 
-        organizerName.setText(event.getInitName());
-        //organizerAddress.setText(event.getAddress());
+        organizerName.setText(initiatorDetailed.getName());
+        organizerAddress.setText(initiatorDetailed.getAddress());
 
     }
 

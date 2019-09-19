@@ -10,10 +10,6 @@ public class EventDetailed {
     @Expose
     private int eventId;
 
-    @SerializedName("OrgId")
-    @Expose
-    private int resId;
-
     @SerializedName("RequestId")
     @Expose
     private int requestId;
@@ -42,29 +38,16 @@ public class EventDetailed {
     @Expose
     private List<Photo> photo;
 
-    @SerializedName("InitProfilIcon")
+    @SerializedName("InitiatorInfo")
     @Expose
-    private String initProfileIconUrl;
+    private InitiatorDetailed initiatorInfo;
 
-    @SerializedName("OrgProfilIcon")
+    @SerializedName("RestouranInfo")
     @Expose
-    private String resProfileIconUrl;
+    private RestaurantDetailed restaurantInfo;
 
-    @SerializedName("InitName")
-    @Expose
-    private String initName;
-
-    @SerializedName("OrgName")
-    @Expose
-    private String resName;
-
-    @SerializedName("InitId")
-    @Expose
-    private int initId;
-
-    public EventDetailed(int eventId, int resId, int requestId, String name, String date, String start, String end, String about, List<Photo> photo, String initProfileIconUrl, String resProfileIconUrl, String initName, String resName, int initId) {
+    public EventDetailed(int eventId, int requestId, String name, String date, String start, String end, String about, List<Photo> photo, InitiatorDetailed initiatorInfo, RestaurantDetailed restaurantInfo) {
         this.eventId = eventId;
-        this.resId = resId;
         this.requestId = requestId;
         this.name = name;
         this.date = date;
@@ -72,11 +55,8 @@ public class EventDetailed {
         this.end = end;
         this.about = about;
         this.photo = photo;
-        this.initProfileIconUrl = initProfileIconUrl;
-        this.resProfileIconUrl = resProfileIconUrl;
-        this.initName = initName;
-        this.resName = resName;
-        this.initId = initId;
+        this.initiatorInfo = initiatorInfo;
+        this.restaurantInfo = restaurantInfo;
     }
 
     public int getEventId() {
@@ -85,14 +65,6 @@ public class EventDetailed {
 
     public void setEventId(int eventId) {
         this.eventId = eventId;
-    }
-
-    public int getResId() {
-        return resId;
-    }
-
-    public void setResId(int resId) {
-        this.resId = resId;
     }
 
     public int getRequestId() {
@@ -151,51 +123,26 @@ public class EventDetailed {
         this.photo = photo;
     }
 
-    public String getInitProfileIconUrl() {
-        return initProfileIconUrl;
+    public InitiatorDetailed getInitiatorInfo() {
+        return initiatorInfo;
     }
 
-    public void setInitProfileIconUrl(String initProfileIconUrl) {
-        this.initProfileIconUrl = initProfileIconUrl;
+    public void setInitiatorInfo(InitiatorDetailed initiatorInfo) {
+        this.initiatorInfo = initiatorInfo;
     }
 
-    public String getResProfileIconUrl() {
-        return resProfileIconUrl;
+    public RestaurantDetailed getRestaurantInfo() {
+        return restaurantInfo;
     }
 
-    public void setResProfileIconUrl(String resProfileIconUrl) {
-        this.resProfileIconUrl = resProfileIconUrl;
-    }
-
-    public String getInitName() {
-        return initName;
-    }
-
-    public void setInitName(String initName) {
-        this.initName = initName;
-    }
-
-    public String getResName() {
-        return resName;
-    }
-
-    public void setResName(String resName) {
-        this.resName = resName;
-    }
-
-    public int getInitId() {
-        return initId;
-    }
-
-    public void setInitId(int initId) {
-        this.initId = initId;
+    public void setRestaurantInfo(RestaurantDetailed restaurantInfo) {
+        this.restaurantInfo = restaurantInfo;
     }
 
     @Override
     public String toString() {
         return "EventDetailed{" +
                 "eventId=" + eventId +
-                ", resId=" + resId +
                 ", requestId=" + requestId +
                 ", name='" + name + '\'' +
                 ", date='" + date + '\'' +
@@ -203,11 +150,8 @@ public class EventDetailed {
                 ", end='" + end + '\'' +
                 ", about='" + about + '\'' +
                 ", photo=" + photo +
-                ", initProfileIconUrl='" + initProfileIconUrl + '\'' +
-                ", resProfileIconUrl='" + resProfileIconUrl + '\'' +
-                ", initName='" + initName + '\'' +
-                ", resName='" + resName + '\'' +
-                ", initId=" + initId +
+                ", initiatorInfo=" + initiatorInfo +
+                ", restaurantInfo=" + restaurantInfo +
                 '}';
     }
 }
