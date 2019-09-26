@@ -22,4 +22,6 @@
     <dimen name="foods_table_padding_top">5dp</dimen>
     <dimen name="foods_table_padding_start">10dp</dimen>
     <dimen name="foods_table_top_margin">10dp</dimen>
+    <dimen name="list_foods_to_pick_start_margin">20dp</dimen>
+    <dimen name="line_height">1dp</dimen>
 </resources>

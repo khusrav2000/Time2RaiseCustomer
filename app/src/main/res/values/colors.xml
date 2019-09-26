@@ -21,4 +21,5 @@
     <color name="count_food_color">#494A4D</color>
     <color name="menu_text_colors">#4B4B4D</color>
     <color name="back_button_grey">#949191</color>
+    <color name="food_list_color">#666667</color>
 </resources>

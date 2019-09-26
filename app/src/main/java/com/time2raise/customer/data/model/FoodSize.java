@@ -3,7 +3,7 @@ package com.time2raise.customer.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class FoodSize {
+public class FoodSize {
     @SerializedName("FoodSizeId")
     @Expose
     private int foodSizeId;
