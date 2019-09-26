@@ -43,6 +43,10 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/roboto_bold"/>
         </RelativeLayout>
+        <ListView
+            android:id="@+id/foods_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </FrameLayout>

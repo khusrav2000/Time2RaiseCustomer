@@ -12,7 +12,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -58,6 +60,8 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
 
     List<ResFood> foods;
 
+    ListView foodList;
+
     private OnFragmentInteractionListener mListener;
 
     public PickFoodsByCategoryIdFragment() {
@@ -90,6 +94,7 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
         System.out.println("--------------" + categoryId);
 
         layoutFoodsList = view.findViewById(R.id.layout_foods_list);
+        foodList = view.findViewById(R.id.foods_list);
         getRestaurantId();
         return view;
     }
@@ -127,7 +132,12 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
 
     private void startShowFoodsToPick(List<ResFood> resFoods) {
 
-        int i = 0 ;
+        // Тут каждый элемент списка будет один класс "FoodAdapter", куда мы отправляем нужные значения во время создании экземпляра.
+        FoodAdapter foodAdapter = new FoodAdapter(getContext(), R.layout.food_list_item, resFoods);
+
+        foodList.setAdapter(foodAdapter);
+
+        /*int i = 0 ;
         for (ResFood resFood : resFoods){
             i ++ ;
             final LinearLayout food = new LinearLayout(getContext());
@@ -225,7 +235,7 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
 
             foodPrice.setText("+ $" + foodSizesInformation.get(0).getPrice());
 
-            food.addView(foodPrice);*/
+            food.addView(foodPrice);
 
             View line = new View(getContext());
 
@@ -242,7 +252,7 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
             layoutFoodsList.addView(food);
             layoutFoodsList.addView(line);
 
-        }
+        }*/
     }
 
     private void getRestaurantId() {
