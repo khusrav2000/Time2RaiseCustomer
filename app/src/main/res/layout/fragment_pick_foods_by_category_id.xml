@@ -7,9 +7,9 @@
 
     <LinearLayout
         android:id="@+id/layout_foods_list"
-        android:paddingBottom="200dp"
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="40dp"
         android:layout_marginStart="20dp"
@@ -46,7 +46,10 @@
         <ListView
             android:id="@+id/foods_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:divider="@null"
+            android:dividerHeight="0dp"/>
     </LinearLayout>
 
 </FrameLayout>

@@ -28,6 +28,7 @@ import com.time2raise.customer.data.model.ResFood;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -133,7 +134,9 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
     private void startShowFoodsToPick(List<ResFood> resFoods) {
 
         // Тут каждый элемент списка будет один класс "FoodAdapter", куда мы отправляем нужные значения во время создании экземпляра.
-        FoodAdapter foodAdapter = new FoodAdapter(getContext(), R.layout.food_list_item, resFoods);
+        ArrayList<ResFood> ff = new ArrayList<>(resFoods);
+        FoodAdapter foodAdapter = new FoodAdapter(getActivity().getApplicationContext(), R.layout.food_list_item, ff);
+        System.out.println(foodAdapter.getCount());
         foodList.setAdapter(foodAdapter);
 
         /*int i = 0 ;
