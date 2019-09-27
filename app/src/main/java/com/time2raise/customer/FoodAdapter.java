@@ -27,7 +27,7 @@ public class FoodAdapter extends ArrayAdapter<ResFood> {
         this.inflater = LayoutInflater.from(context);
     }
 
-
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
 

@@ -134,7 +134,6 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
 
         // Тут каждый элемент списка будет один класс "FoodAdapter", куда мы отправляем нужные значения во время создании экземпляра.
         FoodAdapter foodAdapter = new FoodAdapter(getContext(), R.layout.food_list_item, resFoods);
-
         foodList.setAdapter(foodAdapter);
 
         /*int i = 0 ;
