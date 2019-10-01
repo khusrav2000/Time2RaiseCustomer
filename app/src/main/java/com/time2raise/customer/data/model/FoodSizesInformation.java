@@ -16,7 +16,7 @@ public class FoodSizesInformation {
 
     @SerializedName("Size")
     @Expose
-    private FoodSize foodSizes;
+    private FoodSize foodSize;
 
     @SerializedName("CookTime")
     @Expose
@@ -30,10 +30,10 @@ public class FoodSizesInformation {
     @Expose
     private double price;
 
-    public FoodSizesInformation(int foodId, int orgFoodId, FoodSize foodSizes, String cookTime, String packingTime, double price) {
+    public FoodSizesInformation(int foodId, int orgFoodId, FoodSize foodSize, String cookTime, String packingTime, double price) {
         this.foodId = foodId;
         this.orgFoodId = orgFoodId;
-        this.foodSizes = foodSizes;
+        this.foodSize = foodSize;
         this.cookTime = cookTime;
         this.packingTime = packingTime;
         this.price = price;
@@ -55,12 +55,12 @@ public class FoodSizesInformation {
         this.orgFoodId = orgFoodId;
     }
 
-    public FoodSize getFoodSizes() {
-        return foodSizes;
+    public FoodSize getFoodSize() {
+        return foodSize;
     }
 
-    public void setFoodSizes(FoodSize foodSizes) {
-        this.foodSizes = foodSizes;
+    public void setFoodSize(FoodSize foodSizes) {
+        this.foodSize = foodSizes;
     }
 
     public String getCookTime() {
@@ -92,7 +92,7 @@ public class FoodSizesInformation {
         return "FoodSizesInformation{" +
                 "foodId=" + foodId +
                 ", orgFoodId=" + orgFoodId +
-                ", foodSizes=" + foodSizes +
+                ", foodSizes=" + foodSize +
                 ", cookTime='" + cookTime + '\'' +
                 ", packingTime='" + packingTime + '\'' +
                 ", price=" + price +
