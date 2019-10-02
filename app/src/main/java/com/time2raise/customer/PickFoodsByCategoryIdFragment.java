@@ -57,7 +57,7 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
     public static final String APP_TOKEN = "getToken";
     SharedPreferences skipLoginPhone;
 
-    LinearLayout layoutFoodsList;
+    RelativeLayout layoutFoodsList;
 
     List<ResFood> foods;
 

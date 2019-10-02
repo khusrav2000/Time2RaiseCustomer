@@ -15,6 +15,9 @@
             android:id="@+id/food_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/foods_name"
             android:text="@string/name_food"/>
 
         <ImageView
@@ -29,14 +32,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="end"
+            android:textSize="13sp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/foods_name"
             android:text="@string/price" />
     </LinearLayout>
 
-    <ListView
+    <LinearLayout
         android:id="@+id/food_sizes_list"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:visibility="gone"/>
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical"/>
 
 
     <View
