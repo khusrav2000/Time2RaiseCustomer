@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -62,7 +63,7 @@ public class FoodAdapter extends ArrayAdapter<ResFood> {
         System.out.println("position!!!" + position);
         System.out.println(resFood.getFoodName());
         viewHolder.foodName.setText(resFood.getFoodName());
-
+        int i = 0 ;
         for (FoodSizesInformation foodSizesInformation : resFood.getFoodSizesInformation()){
             RelativeLayout foodOfSize = new RelativeLayout(getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -81,7 +82,7 @@ public class FoodAdapter extends ArrayAdapter<ResFood> {
             params.setMargins(start, 0 , 0 , 0);
             foodOfSize.setLayoutParams(params);
 
-            RadioButton isPicked = new RadioButton(getContext());
+            CheckBox isPicked = new CheckBox(getContext());
             RelativeLayout.LayoutParams isPickedParam = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT
@@ -89,7 +90,8 @@ public class FoodAdapter extends ArrayAdapter<ResFood> {
             isPickedParam.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
             isPickedParam.addRule(RelativeLayout.CENTER_VERTICAL);
             isPicked.setLayoutParams(isPickedParam);
-            //isPicked.setId(1);
+            i ++;
+            isPicked.setId(i);
 
             // Создание View для имени размера продукта.
             TextView foodSizeName = new TextView(getContext());
@@ -123,22 +125,12 @@ public class FoodAdapter extends ArrayAdapter<ResFood> {
 
             pickCount.setLayoutParams(pickCountParam);
 
-            Button plus = new Button(getContext());
-            plus.setText("+");
-            Button minus = new Button(getContext());
-            minus.setText("-");
-            TextView count = new TextView(getContext());
-            count.setText("0");
 
-            pickCount.addView(minus);
-            pickCount.addView(count);
-            pickCount.addView(plus);
 
             foodOfSize.addView(isPicked);
             foodOfSize.addView(foodSizeName);
             foodOfSize.addView(pickCount);
             foodOfSize.addView(foodSizePrice);
-
 
             viewHolder.foodSizesList.addView(foodOfSize);
         }
