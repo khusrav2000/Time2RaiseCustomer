@@ -1,8 +1,14 @@
 package com.time2raise.customer;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -39,6 +45,7 @@ public class ViewProfile extends AppCompatActivity {
     TextView aboutUs;
 
     Button callButton;
+    String phoneToCall;
 
     final String STORAGE_URL = "https://drive.google.com/uc?export=download&id=";
 
@@ -74,6 +81,28 @@ public class ViewProfile extends AppCompatActivity {
         aboutUs                             = findViewById(R.id.about_us);
 
         callButton                          = findViewById(R.id.call_button);
+
+        callButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                System.out.println("Click");
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + phoneToCall));
+                final int REQUEST_PHONE_CALL = 1;
+                if (ActivityCompat.checkSelfPermission(ViewProfile.this,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(ViewProfile.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+                }
+
+                if (ActivityCompat.checkSelfPermission(ViewProfile.this,
+                        Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    System.out.println("Permission denied!");
+                    return;
+                }
+                startActivity(callIntent);
+            }
+        });
+
+
 
         Intent intent = getIntent();
         int organizerId = intent.getIntExtra("organizerId", -1);
@@ -111,6 +140,7 @@ public class ViewProfile extends AppCompatActivity {
     }
 
     private void fillOrganizationInformation(OrganizerInformation organizerInformation) {
+        phoneToCall = organizerInformation.getPhone();
         Picasso picasso = Picasso.get();
 
         picasso.load(STORAGE_URL + organizerInformation.getBackgroundImageUrl())
@@ -158,6 +188,7 @@ public class ViewProfile extends AppCompatActivity {
     }
 
     private void fillRestaurantInformation(RestaurantInformation restaurantInformation) {
+        phoneToCall = restaurantInformation.getPhone();
         Picasso picasso = Picasso.get();
 
         picasso.load(STORAGE_URL + restaurantInformation.getBackgroundImageUrl())

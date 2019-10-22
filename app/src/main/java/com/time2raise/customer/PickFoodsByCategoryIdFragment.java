@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -29,6 +30,7 @@ import com.time2raise.customer.data.model.ResFood;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -62,6 +64,11 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
     List<ResFood> foods;
 
     ListView foodList;
+
+    ExpandableListView expandableListView;
+    ExpandableListAdapter expandableListAdapter;
+    List<String> expandableListTitle;
+    HashMap<String, List<FoodSizesInformation>> expandableListDetail;
 
     private OnFragmentInteractionListener mListener;
 
@@ -134,11 +141,29 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
     private void startShowFoodsToPick(List<ResFood> resFoods) {
 
         // Тут каждый элемент списка будет один класс "FoodAdapter", куда мы отправляем нужные значения во время создании экземпляра.
-        ArrayList<ResFood> ff = new ArrayList<>(resFoods);
+        /*ArrayList<ResFood> ff = new ArrayList<>(resFoods);
+
+        for (ResFood food : ff){
+            System.out.println(food.toString());
+        }
+
         FoodAdapter foodAdapter = new FoodAdapter(getActivity().getApplicationContext(), R.layout.food_list_item, ff);
         System.out.println(foodAdapter.getCount());
-        foodList.setAdapter(foodAdapter);
+        foodAdapter.setEventId(eventId);
+        foodList.setAdapter(foodAdapter);*/
 
+        expandableListDetail = new HashMap<>();
+        for (ResFood food : resFoods){
+            expandableListDetail.put(food.getFoodName(), food.getFoodSizesInformation());
+        }
+        expandableListView = (ExpandableListView) foodList;
+
+        //expandableListDetail = ExpandableListData.getData();
+        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        expandableListAdapter = new ExpandableListAdapter(getActivity(), expandableListTitle, expandableListDetail);
+        expandableListView.setAdapter(expandableListAdapter);
+
+        //System.out.println("count chaild :" + expandableListAdapter.getChildView(1, 0, new View(getContext()), null);
         /*int i = 0 ;
         for (ResFood resFood : resFoods){
             i ++ ;
