@@ -44,16 +44,19 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/roboto_bold"/>
         </RelativeLayout>
-        <ExpandableListView
-            android:id="@+id/foods_list"
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:divider="@null"
             android:layout_below="@id/top_food_category_name"
-            android:dividerHeight="0dp"/>
-
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+        <LinearLayout
+            android:id="@+id/foods_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+        </ScrollView>
         <RelativeLayout
             android:id="@+id/add_picked_foods_to_cart"
             android:layout_width="match_parent"
@@ -80,6 +83,7 @@
                 android:textSize="16sp"/>
 
             <TextView
+                android:id="@+id/total_order_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/price"

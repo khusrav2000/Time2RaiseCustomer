@@ -8,13 +8,13 @@ import java.util.List;
 public class OneFoodInfo {
 
     private String foodName;
-    private double totalPtice;
+    private double totalPrice;
     private List<OneFoodSubFoodSizes> foodSizes;
     private int eventId;
 
-    public OneFoodInfo(String foodName, double totalPtice, List<OneFoodSubFoodSizes> foodSizes, int eventId) {
+    public OneFoodInfo(String foodName, double totalPrice, List<OneFoodSubFoodSizes> foodSizes, int eventId) {
         this.foodName = foodName;
-        this.totalPtice = totalPtice;
+        this.totalPrice = totalPrice;
         this.foodSizes = foodSizes;
         this.eventId = eventId;
     }
@@ -27,12 +27,12 @@ public class OneFoodInfo {
         this.foodName = foodName;
     }
 
-    public double getTotalPtice() {
-        return totalPtice;
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setTotalPtice(double totalPtice) {
-        this.totalPtice = totalPtice;
+    public void setTotalPrice(double totalPtice) {
+        this.totalPrice = totalPtice;
     }
 
     public List<OneFoodSubFoodSizes> getFoodSizes() {
@@ -55,7 +55,7 @@ public class OneFoodInfo {
     public String toString() {
         return "OneFoodInfo{" +
                 "foodName='" + foodName + '\'' +
-                ", totalPtice=" + totalPtice +
+                ", totalPtice=" + totalPrice +
                 ", foodSizes=" + foodSizes +
                 ", eventId=" + eventId +
                 '}';

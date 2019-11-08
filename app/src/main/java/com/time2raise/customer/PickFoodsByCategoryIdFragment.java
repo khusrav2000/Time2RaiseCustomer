@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -13,18 +15,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.time2raise.customer.data.NetworkClient;
 import com.time2raise.customer.data.apis.Customer;
 import com.time2raise.customer.data.model.EventDetailed;
 import com.time2raise.customer.data.model.EventInf;
 import com.time2raise.customer.data.model.FoodSize;
 import com.time2raise.customer.data.model.FoodSizesInformation;
+import com.time2raise.customer.data.model.OneFoodInfo;
+import com.time2raise.customer.data.model.OneFoodSubFoodSizes;
 import com.time2raise.customer.data.model.ResFood;
 
 import org.w3c.dom.Text;
@@ -63,12 +71,10 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
 
     List<ResFood> foods;
 
-    ListView foodList;
+    LinearLayout foodList;
+    TextView totalOrderPrice;
+    double totalPrice;
 
-    ExpandableListView expandableListView;
-    ExpandableListAdapter expandableListAdapter;
-    List<String> expandableListTitle;
-    HashMap<String, List<FoodSizesInformation>> expandableListDetail;
 
     private OnFragmentInteractionListener mListener;
 
@@ -103,6 +109,7 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
 
         layoutFoodsList = view.findViewById(R.id.layout_foods_list);
         foodList = view.findViewById(R.id.foods_list);
+        totalOrderPrice = view.findViewById(R.id.total_order_price);
         getRestaurantId();
         return view;
     }
@@ -140,146 +147,369 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
 
     private void startShowFoodsToPick(List<ResFood> resFoods) {
 
-        // Тут каждый элемент списка будет один класс "FoodAdapter", куда мы отправляем нужные значения во время создании экземпляра.
-        /*ArrayList<ResFood> ff = new ArrayList<>(resFoods);
-
-        for (ResFood food : ff){
-            System.out.println(food.toString());
-        }
-
-        FoodAdapter foodAdapter = new FoodAdapter(getActivity().getApplicationContext(), R.layout.food_list_item, ff);
-        System.out.println(foodAdapter.getCount());
-        foodAdapter.setEventId(eventId);
-        foodList.setAdapter(foodAdapter);*/
-
-        expandableListDetail = new HashMap<>();
-        for (ResFood food : resFoods){
-            expandableListDetail.put(food.getFoodName(), food.getFoodSizesInformation());
-        }
-        expandableListView = (ExpandableListView) foodList;
-
-        //expandableListDetail = ExpandableListData.getData();
-        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new ExpandableListAdapter(getActivity(), expandableListTitle, expandableListDetail);
-        expandableListView.setAdapter(expandableListAdapter);
-
-        //System.out.println("count chaild :" + expandableListAdapter.getChildView(1, 0, new View(getContext()), null);
-        /*int i = 0 ;
+        int i = 0 ;
         for (ResFood resFood : resFoods){
             i ++ ;
-            final LinearLayout food = new LinearLayout(getContext());
+            LinearLayout foodLine = new LinearLayout(getActivity().getApplicationContext());
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
+            foodLine.setLayoutParams(params);
+            foodLine.setOrientation(LinearLayout.VERTICAL);
 
-            Resources r = getContext().getResources();
-            int left = (int) TypedValue.applyDimension(
+            System.out.println(resFood.toString());
+
+
+            // Здесь заканчивается инициализация параметром FoodLine
+
+            RelativeLayout foodNameLiner = new RelativeLayout(getActivity().getApplicationContext());
+            foodNameLiner.setLayoutParams(params);
+
+            final CheckBox pickedFood = new CheckBox(getActivity().getBaseContext());
+            pickedFood.setId(i);
+            RelativeLayout.LayoutParams pickedFoodParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            pickedFoodParams.addRule(RelativeLayout.CENTER_VERTICAL);
+            pickedFoodParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            pickedFood.setLayoutParams(pickedFoodParams);
+            foodNameLiner.addView(pickedFood);
+
+            TextView nameFood = new TextView(getActivity().getApplicationContext());
+            nameFood.setId(i + 100000000);
+            nameFood.setText(resFood.getFoodName());
+            RelativeLayout.LayoutParams nameFoodParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            nameFoodParams.addRule(RelativeLayout.CENTER_VERTICAL);
+            nameFoodParams.addRule(RelativeLayout.RIGHT_OF, pickedFood.getId());
+            nameFood.setLayoutParams(nameFoodParams);
+            foodNameLiner.addView(nameFood);
+
+            ImageView showSizesImage = new ImageView(getActivity().getApplicationContext());
+            showSizesImage.setId(i + 1000000);
+            showSizesImage.setImageDrawable(getActivity().getBaseContext().getDrawable(R.drawable.icon_polygon_2));
+            RelativeLayout.LayoutParams showSizesImageParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            Resources rr = getActivity().getApplicationContext().getResources();
+            int widthS = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP,
-                    20,
-                    r.getDisplayMetrics()
+                    10,
+                    rr.getDisplayMetrics()
+            );
+            int heightS = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    10,
+                    rr.getDisplayMetrics()
             );
 
+            showSizesImageParams.width = widthS;
+            showSizesImageParams.height = heightS;
+            showSizesImageParams.addRule(RelativeLayout.CENTER_VERTICAL);
+            showSizesImageParams.addRule(RelativeLayout.RIGHT_OF, nameFood.getId());
+            showSizesImage.setLayoutParams(showSizesImageParams);
+            foodNameLiner.addView(showSizesImage);
+
+            final TextView priceFood = new TextView(getActivity().getApplicationContext());
+            priceFood.setText("$0.0");
+            RelativeLayout.LayoutParams priceFoodParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            priceFoodParams.addRule(RelativeLayout.CENTER_VERTICAL);
+            priceFoodParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            priceFood.setLayoutParams(priceFoodParams);
+            foodNameLiner.addView(priceFood);
+
+            foodLine.addView(foodNameLiner);
+
+
+            View line = new View(getActivity().getApplicationContext());
+            LinearLayout.LayoutParams lineParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    getActivity().getBaseContext().getResources().getDimensionPixelOffset(R.dimen.line_height)
+            );
+            Resources r = getActivity().getApplicationContext().getResources();
+            int bottom = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    10,
+                    r.getDisplayMetrics()
+            );
             int top = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP,
                     10,
                     r.getDisplayMetrics()
             );
+            lineParams.setMargins(0 , top, 0, bottom);
+            line.setLayoutParams(lineParams);
+            line.setBackgroundColor(getActivity().getBaseContext().getColor(R.color.line_color));
 
-            params.setMargins(left, top , 0 , 0 );
-            food.setLayoutParams(params);
-            food.setOrientation(LinearLayout.VERTICAL);
+            final LinearLayout foodSizes = new LinearLayout(getActivity().getApplicationContext());
 
-
-
-
-            TextView foodName = new TextView(getContext());
-
-            LinearLayout.LayoutParams foodNameParams = new LinearLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT
-            );
-
-            foodName.setLayoutParams(foodNameParams);
-            foodName.setText(resFood.getFoodName());
-            foodName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-            foodName.setTextColor(getContext().getColor(R.color.food_list_color));
-            foodName.setCompoundDrawablesWithIntrinsicBounds(null, null , getContext().getDrawable(R.drawable.icon_polygon), null);
-            foodName.setGravity(Gravity.CENTER_VERTICAL);
-            int drawablePadding = (int) TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    5,
-                    r.getDisplayMetrics()
-            );
-            foodName.setCompoundDrawablePadding(drawablePadding);
-
-            food.addView(foodName);
-
-            final LinearLayout foodSizes = new LinearLayout(getContext());
-
-            final LinearLayout.LayoutParams foodSizeParams = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams foodSizesParams = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
+            foodSizes.setLayoutParams(foodSizesParams);
+            foodSizes.setVisibility(View.GONE);
+            foodSizes.setOrientation(LinearLayout.VERTICAL);
 
-            foodSizes.setLayoutParams(foodSizeParams);
+            final OneFoodInfo oneFoodInfo = new OneFoodInfo(resFood.getFoodName(), 0.0,
+                    new ArrayList<OneFoodSubFoodSizes>(), eventId);
 
-            for (FoodSizesInformation foodSize : resFood.getFoodSizesInformation()){
-                TextView foodSizeName = new TextView(getContext());
-                foodSizeName.setText(foodSize.getFoodSizes().getSizeName());
-                foodSizes.addView(foodSizeName);
+            int j = 0;
+            for (final FoodSizesInformation foodSizesInformation : resFood.getFoodSizesInformation()){
+
+                System.out.println(foodSizesInformation.toString());
+
+
+                final OneFoodSubFoodSizes oneFoodSubFoodSizes = new OneFoodSubFoodSizes(0,
+                        foodSizesInformation.getFoodSize().getSizeName(), 0.0);
+
+                RelativeLayout foodOfSize = new RelativeLayout(getActivity().getApplicationContext());
+                LinearLayout.LayoutParams foodOfSizeParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                //foodOfSize.setBackgroundColor(getActivity().getApplicationContext().getColor(R.color.green));
+
+                int start = (int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        20,
+                        r.getDisplayMetrics()
+                );
+                foodOfSizeParams.setMargins(start, 0 , 0 , 0);
+                foodOfSize.setLayoutParams(foodOfSizeParams);
+
+                final CheckBox isPicked = new CheckBox(getActivity().getApplicationContext());
+                RelativeLayout.LayoutParams isPickedParam = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
+                );
+                isPickedParam.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                isPickedParam.addRule(RelativeLayout.CENTER_VERTICAL);
+                isPicked.setLayoutParams(isPickedParam);
+
+                j ++ ;
+                isPicked.setId(i * 100 + j);
+                System.out.println("sadas =  == " + isPicked.getId());
+                final int iii = j;
+
+
+                // Создание View для имени размера продукта.
+                TextView foodSizeName = new TextView(getActivity().getApplicationContext());
+                RelativeLayout.LayoutParams foodSizeNameParam = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
+                );
+                foodSizeNameParam.addRule(RelativeLayout.RIGHT_OF, isPicked.getId());
+                foodSizeNameParam.addRule(RelativeLayout.CENTER_VERTICAL);
+                foodSizeName.setLayoutParams(foodSizeNameParam);
+                foodSizeName.setText(foodSizesInformation.getFoodSize().getSizeName());
+
+
+
+                final LinearLayout countLayout = new LinearLayout(getActivity().getApplicationContext());
+                RelativeLayout.LayoutParams countLayoutParams = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
+                );
+                countLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                countLayout.setLayoutParams(countLayoutParams);
+                countLayout.setVisibility(View.GONE);
+
+
+
+                TextView minus = new TextView(getContext());
+                minus.setText("-  ");
+                countLayout.addView(minus);
+
+                final TextView count = new TextView(getContext());
+                count.setText("0");
+                countLayout.addView(count);
+
+
+                TextView plus = new TextView(getContext());
+                plus.setText("  +");
+                countLayout.addView(plus);
+
+                // Создание View для цены определенного размера продукта.
+                final TextView foodSizePrice = new TextView(getActivity().getApplicationContext());
+                RelativeLayout.LayoutParams foodSizePriceParam = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
+                );
+                foodSizePriceParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                foodSizePriceParam.addRule(RelativeLayout.CENTER_VERTICAL);
+                foodSizePrice.setLayoutParams(foodSizePriceParam);
+                foodSizePrice.setText(String.valueOf(oneFoodSubFoodSizes.getPrice()));
+
+                isPicked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        System.out.println(isPicked.getId());
+                        if (b) {
+                            countLayout.setVisibility(View.VISIBLE);
+
+                            oneFoodInfo.setTotalPrice(oneFoodInfo.getTotalPrice() +
+                                    foodSizesInformation.getPrice());
+
+                            totalPrice = totalPrice + foodSizesInformation.getPrice();
+                            totalOrderPrice.setText(String.valueOf(totalPrice));
+
+                            priceFood.setText(String.valueOf(oneFoodInfo.getTotalPrice()));
+
+                            count.setText("1");
+                            oneFoodSubFoodSizes.setAmount(1);
+                            oneFoodSubFoodSizes.setPrice(foodSizesInformation.getPrice());
+                            foodSizePrice.setText(String.valueOf(oneFoodSubFoodSizes.getPrice()));
+
+                            if (oneFoodInfo.getTotalPrice() > 0.0){
+                                pickedFood.setChecked(true);
+                            } else {
+                                pickedFood.setChecked(false);
+                            }
+
+                        } else {
+                            oneFoodInfo.setTotalPrice(oneFoodInfo.getTotalPrice() -
+                                    oneFoodSubFoodSizes.getAmount() * foodSizesInformation.getPrice());
+                            priceFood.setText(String.valueOf(oneFoodInfo.getTotalPrice()));
+
+                            totalPrice = totalPrice -
+                                    oneFoodSubFoodSizes.getAmount() * foodSizesInformation.getPrice();
+                            totalOrderPrice.setText(String.valueOf(totalPrice));
+
+                            countLayout.setVisibility(View.GONE);
+                            count.setText("0");
+                            oneFoodSubFoodSizes.setAmount(0);
+                            oneFoodSubFoodSizes.setPrice(0.0);
+                            foodSizePrice.setText(String.valueOf(oneFoodSubFoodSizes.getPrice()));
+
+                            if (oneFoodInfo.getTotalPrice() > 0.0){
+                                pickedFood.setChecked(true);
+                            } else {
+                                pickedFood.setChecked(false);
+                            }
+
+                        }
+
+                    }
+                });
+
+                minus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        oneFoodInfo.setTotalPrice(oneFoodInfo.getTotalPrice() -
+                                foodSizesInformation.getPrice());
+                        priceFood.setText(String.valueOf(oneFoodInfo.getTotalPrice()));
+
+                        totalPrice = totalPrice - foodSizesInformation.getPrice();
+                        totalOrderPrice.setText(String.valueOf(totalPrice));
+
+                        oneFoodSubFoodSizes.setAmount(oneFoodSubFoodSizes.getAmount() - 1);
+                        oneFoodSubFoodSizes.setPrice(oneFoodSubFoodSizes.getAmount() * foodSizesInformation.getPrice());
+                        count.setText(String.valueOf(oneFoodSubFoodSizes.getAmount()));
+                        foodSizePrice.setText(String.valueOf(oneFoodSubFoodSizes.getPrice()));
+
+                        if (oneFoodSubFoodSizes.getAmount() == 0){
+                            countLayout.setVisibility(View.GONE);
+                            isPicked.setChecked(false);
+                        }
+
+                        if (oneFoodInfo.getTotalPrice() > 0.0){
+                            pickedFood.setChecked(true);
+                        } else {
+                            pickedFood.setChecked(false);
+                        }
+
+                    }
+                });
+
+                plus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        oneFoodInfo.setTotalPrice(oneFoodInfo.getTotalPrice() +
+                                foodSizesInformation.getPrice());
+                        priceFood.setText(String.valueOf(oneFoodInfo.getTotalPrice()));
+
+                        totalPrice = totalPrice + foodSizesInformation.getPrice();
+                        totalOrderPrice.setText(String.valueOf(totalPrice));
+
+                        oneFoodSubFoodSizes.setAmount(oneFoodSubFoodSizes.getAmount() + 1);
+                        oneFoodSubFoodSizes.setPrice(oneFoodSubFoodSizes.getAmount() * foodSizesInformation.getPrice());
+                        count.setText(String.valueOf(oneFoodSubFoodSizes.getAmount()));
+                        foodSizePrice.setText(String.valueOf(oneFoodSubFoodSizes.getPrice()));
+
+                        if (oneFoodInfo.getTotalPrice() > 0.0){
+                            pickedFood.setChecked(true);
+                        } else {
+                            pickedFood.setChecked(false);
+                        }
+
+                    }
+                });
+
+
+
+                foodOfSize.addView(isPicked);
+                foodOfSize.addView(foodSizeName);
+                foodOfSize.addView(countLayout);
+                foodOfSize.addView(foodSizePrice);
+
+                foodSizes.addView(foodOfSize);
+
+                //oneFoodSubFoodSizesList.add(oneFoodSubFoodSizes);
+
             }
 
-            //foodSizes.setEnabled(false);
-
-            foodName.setId(i + 1);
-
-            foodName.setOnClickListener(new View.OnClickListener() {
+            final int iii = i ;
+            final int sizeFoods = resFood.getFoodSizesInformation().size();
+            pickedFood.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View view) {
-                    System.out.println("Ebabled!");
-                    if (foodSizes.getVisibility() == View.VISIBLE)
-                        foodSizes.setVisibility(View.GONE);
-                    else foodSizes.setVisibility(View.VISIBLE);
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked){
+                        int t = iii * 100 + 1;
+                        CheckBox che = foodSizes.findViewById(t);
+                        if (oneFoodInfo.getTotalPrice() <= 0.0) {
+                            che.setChecked(true);
+                        }
+                    } else {
+
+                        for(int g = 0 ; g < sizeFoods; g ++){
+                            int t = iii * 100 + g + 1;
+                            CheckBox che = foodSizes.findViewById(t);
+                            che.setChecked(false);
+                        }
+
+                    }
                 }
             });
 
-            food.addView(foodSizes);
+            showSizesImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (foodSizes.getVisibility() == View.VISIBLE){
+                        foodSizes.setVisibility(View.GONE);
+                    } else {
+                        foodSizes.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
 
-            /*TextView foodPrice = new TextView(getContext());
+            foodLine.addView(foodSizes);
 
-            RelativeLayout.LayoutParams foodPriceParams = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT
-            );
+            foodList.addView(foodLine);
+            foodList.addView(line);
 
-            foodPriceParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-            foodPrice.setLayoutParams(foodPriceParams);
-
-
-            List<FoodSizesInformation> foodSizesInformation = resFood.getFoodSizesInformation();
-
-            foodPrice.setText("+ $" + foodSizesInformation.get(0).getPrice());
-
-            food.addView(foodPrice);
-
-            View line = new View(getContext());
-
-            LinearLayout.LayoutParams lineParams = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    getContext().getResources().getDimensionPixelOffset(R.dimen.line_height)
-            );
-
-            lineParams.setMargins(left, top, 0 , 0);
-
-            line.setLayoutParams(lineParams);
-            line.setBackgroundColor(getContext().getColor(R.color.line_color));
-
-            layoutFoodsList.addView(food);
-            layoutFoodsList.addView(line);
-
-        }*/
+        }
     }
 
     private void getRestaurantId() {
