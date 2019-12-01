@@ -5,10 +5,12 @@ import android.os.AsyncTask;
 
 import com.time2raise.customer.data.room.dao.OrderToCartDao;
 
+import java.util.List;
+
 public class OrderRepository {
 
     private OrderToCartDao orderToCartDao;
-    OrderRepository(Application application){
+    public OrderRepository(Application application){
 
         OrderDatabase db = OrderDatabase.getDatabase(application);
         orderToCartDao = db.OrderToCartDao();
@@ -57,4 +59,9 @@ public class OrderRepository {
             return null;
         }
     }
+
+    public List<OrderToCart> getOrdersByEventId(int eventId){
+        return this.orderToCartDao.getOrdersByEventId(eventId);
+    }
+
 }

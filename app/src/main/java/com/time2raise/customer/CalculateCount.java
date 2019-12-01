@@ -23,4 +23,5 @@ public class CalculateCount {
     public static OneFoodInfo getFoodsByNumber(int i){
         return foods.get(i);
     }
+
 }

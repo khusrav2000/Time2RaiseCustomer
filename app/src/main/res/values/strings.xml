@@ -87,4 +87,5 @@
     <string name="name_food">Food name</string>
     <string name="price">Price</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="add_to_order">Add to Order</string>
 </resources>

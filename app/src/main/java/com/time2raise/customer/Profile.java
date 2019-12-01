@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.organization.CircleTransform;
+import com.time2raise.customer.CircleTransform;
 import com.squareup.picasso.Picasso;
 import com.time2raise.customer.data.NetworkClient;
 import com.time2raise.customer.data.RetUtils;
@@ -167,7 +167,7 @@ public class Profile extends AppCompatActivity {
                 if(add_icon_uri != null)
                     Picasso.get().load(add_icon_uri)
                             .fit()
-                            .transform(new com.example.organization.CircleTransform())
+                            .transform(new CircleTransform())
                             .centerCrop()
                             .into(iconProfile);
             }

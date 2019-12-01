@@ -5,6 +5,7 @@ import com.time2raise.customer.data.model.EventDetailed;
 import com.time2raise.customer.data.model.EventInf;
 import com.time2raise.customer.data.model.Message;
 import com.time2raise.customer.data.model.Order;
+import com.time2raise.customer.data.model.OrderToSend;
 import com.time2raise.customer.data.model.OrganizerInformation;
 import com.time2raise.customer.data.model.ResFood;
 import com.time2raise.customer.data.model.RestaurantInformation;
@@ -86,6 +87,9 @@ public interface Customer {
     Call<List<ResFood> > getFoodsByResIdAndCategory(@Header("token") String token,
                                                     @Path("res_id") int resId,
                                                     @Path("category_id") int categoryId);
+
+    @POST("api/customer/order/add")
+    Call<Message> sendOrder(@Header("token") String token, @Body OrderToSend orderToSend);
 
 
 }

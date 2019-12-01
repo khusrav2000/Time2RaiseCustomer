@@ -25,6 +25,7 @@
             android:background="@drawable/pick_food_top_background">
 
             <ImageButton
+                android:id="@+id/back_fragment_button_pick_foods"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_back_button_grey"

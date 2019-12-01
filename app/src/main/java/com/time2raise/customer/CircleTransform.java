@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.organization;
+package com.time2raise.customer;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

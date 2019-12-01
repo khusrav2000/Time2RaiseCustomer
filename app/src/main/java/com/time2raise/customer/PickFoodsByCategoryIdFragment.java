@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -34,6 +35,8 @@ import com.time2raise.customer.data.model.FoodSizesInformation;
 import com.time2raise.customer.data.model.OneFoodInfo;
 import com.time2raise.customer.data.model.OneFoodSubFoodSizes;
 import com.time2raise.customer.data.model.ResFood;
+import com.time2raise.customer.data.room.OrderRepository;
+import com.time2raise.customer.data.room.OrderToCart;
 
 import org.w3c.dom.Text;
 
@@ -66,14 +69,18 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
     public static final String APP_PREFERENCES_PHONE= "getPhone";
     public static final String APP_TOKEN = "getToken";
     SharedPreferences skipLoginPhone;
+    ImageView backFragment;
 
     RelativeLayout layoutFoodsList;
 
     List<ResFood> foods;
-
+    //ArrayList<OrderToCart> foodPicked = new ArrayList<OrderToCart>();
     LinearLayout foodList;
     TextView totalOrderPrice;
+    RelativeLayout addFoodsToCard;
     double totalPrice;
+
+    List<OrderToCart> orderToCarts = new ArrayList<>();
 
 
     private OnFragmentInteractionListener mListener;
@@ -110,7 +117,35 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
         layoutFoodsList = view.findViewById(R.id.layout_foods_list);
         foodList = view.findViewById(R.id.foods_list);
         totalOrderPrice = view.findViewById(R.id.total_order_price);
+        addFoodsToCard = view.findViewById(R.id.add_picked_foods_to_cart);
         getRestaurantId();
+
+        addFoodsToCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(" HOOO LO ");
+                //List<OneFoodInfo> oneFoodInfos = CalculateCount.foods;
+                OrderRepository orderRepository = new OrderRepository(getActivity().getApplication());
+                System.out.println(eventId);
+                for (OrderToCart orderToCart : orderToCarts){
+                    if (orderToCart.getAmount() > 0) {
+                        orderRepository.insert(orderToCart);
+                        System.out.println(orderToCart.toString());
+                    }
+                }
+                mListener.setCountFoodsCart();
+                mListener.goToPlaceAndOrder();
+            }
+        });
+
+        backFragment = view.findViewById(R.id.back_fragment_button_pick_foods);
+        backFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.goToPlaceAndOrder();
+            }
+        });
+
         return view;
     }
 
@@ -269,8 +304,11 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
                 System.out.println(foodSizesInformation.toString());
 
 
-                final OneFoodSubFoodSizes oneFoodSubFoodSizes = new OneFoodSubFoodSizes(0,
-                        foodSizesInformation.getFoodSize().getSizeName(), 0.0);
+                final OrderToCart orderToCart = new OrderToCart(eventId, 0, resFood.getFoodName(),
+                        foodSizesInformation.getFoodSize().getSizeName(), 0.0, categoryId, 0,
+                        foodSizesInformation.getFoodId());
+
+                orderToCarts.add(orderToCart);
 
                 RelativeLayout foodOfSize = new RelativeLayout(getActivity().getApplicationContext());
                 LinearLayout.LayoutParams foodOfSizeParams = new LinearLayout.LayoutParams(
@@ -348,7 +386,7 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
                 foodSizePriceParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 foodSizePriceParam.addRule(RelativeLayout.CENTER_VERTICAL);
                 foodSizePrice.setLayoutParams(foodSizePriceParam);
-                foodSizePrice.setText(String.valueOf(oneFoodSubFoodSizes.getPrice()));
+                foodSizePrice.setText(String.valueOf(orderToCart.getPrice()));
 
                 isPicked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -366,9 +404,9 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
                             priceFood.setText(String.valueOf(oneFoodInfo.getTotalPrice()));
 
                             count.setText("1");
-                            oneFoodSubFoodSizes.setAmount(1);
-                            oneFoodSubFoodSizes.setPrice(foodSizesInformation.getPrice());
-                            foodSizePrice.setText(String.valueOf(oneFoodSubFoodSizes.getPrice()));
+                            orderToCart.setAmount(1);
+                            orderToCart.setPrice(foodSizesInformation.getPrice());
+                            foodSizePrice.setText(String.valueOf(orderToCart.getPrice()));
 
                             if (oneFoodInfo.getTotalPrice() > 0.0){
                                 pickedFood.setChecked(true);
@@ -378,18 +416,18 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
 
                         } else {
                             oneFoodInfo.setTotalPrice(oneFoodInfo.getTotalPrice() -
-                                    oneFoodSubFoodSizes.getAmount() * foodSizesInformation.getPrice());
+                                    orderToCart.getAmount() * foodSizesInformation.getPrice());
                             priceFood.setText(String.valueOf(oneFoodInfo.getTotalPrice()));
 
                             totalPrice = totalPrice -
-                                    oneFoodSubFoodSizes.getAmount() * foodSizesInformation.getPrice();
+                                    orderToCart.getAmount() * foodSizesInformation.getPrice();
                             totalOrderPrice.setText(String.valueOf(totalPrice));
 
                             countLayout.setVisibility(View.GONE);
                             count.setText("0");
-                            oneFoodSubFoodSizes.setAmount(0);
-                            oneFoodSubFoodSizes.setPrice(0.0);
-                            foodSizePrice.setText(String.valueOf(oneFoodSubFoodSizes.getPrice()));
+                            orderToCart.setAmount(0);
+                            orderToCart.setPrice(0.0);
+                            foodSizePrice.setText(String.valueOf(orderToCart.getPrice()));
 
                             if (oneFoodInfo.getTotalPrice() > 0.0){
                                 pickedFood.setChecked(true);
@@ -413,12 +451,12 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
                         totalPrice = totalPrice - foodSizesInformation.getPrice();
                         totalOrderPrice.setText(String.valueOf(totalPrice));
 
-                        oneFoodSubFoodSizes.setAmount(oneFoodSubFoodSizes.getAmount() - 1);
-                        oneFoodSubFoodSizes.setPrice(oneFoodSubFoodSizes.getAmount() * foodSizesInformation.getPrice());
-                        count.setText(String.valueOf(oneFoodSubFoodSizes.getAmount()));
-                        foodSizePrice.setText(String.valueOf(oneFoodSubFoodSizes.getPrice()));
+                        orderToCart.setAmount(orderToCart.getAmount() - 1);
+                        orderToCart.setPrice(orderToCart.getAmount() * foodSizesInformation.getPrice());
+                        count.setText(String.valueOf(orderToCart.getAmount()));
+                        foodSizePrice.setText(String.valueOf(orderToCart.getPrice()));
 
-                        if (oneFoodSubFoodSizes.getAmount() == 0){
+                        if (orderToCart.getAmount() == 0){
                             countLayout.setVisibility(View.GONE);
                             isPicked.setChecked(false);
                         }
@@ -443,10 +481,10 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
                         totalPrice = totalPrice + foodSizesInformation.getPrice();
                         totalOrderPrice.setText(String.valueOf(totalPrice));
 
-                        oneFoodSubFoodSizes.setAmount(oneFoodSubFoodSizes.getAmount() + 1);
-                        oneFoodSubFoodSizes.setPrice(oneFoodSubFoodSizes.getAmount() * foodSizesInformation.getPrice());
-                        count.setText(String.valueOf(oneFoodSubFoodSizes.getAmount()));
-                        foodSizePrice.setText(String.valueOf(oneFoodSubFoodSizes.getPrice()));
+                        orderToCart.setAmount(orderToCart.getAmount() + 1);
+                        orderToCart.setPrice(orderToCart.getAmount() * foodSizesInformation.getPrice());
+                        count.setText(String.valueOf(orderToCart.getAmount()));
+                        foodSizePrice.setText(String.valueOf(orderToCart.getPrice()));
 
                         if (oneFoodInfo.getTotalPrice() > 0.0){
                             pickedFood.setChecked(true);
@@ -494,6 +532,17 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
             });
 
             showSizesImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (foodSizes.getVisibility() == View.VISIBLE){
+                        foodSizes.setVisibility(View.GONE);
+                    } else {
+                        foodSizes.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+
+            nameFood.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (foodSizes.getVisibility() == View.VISIBLE){
@@ -559,5 +608,7 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+        void goToPlaceAndOrder();
+        void setCountFoodsCart();
     }
 }

@@ -24,6 +24,7 @@
         android:background="@drawable/top_full_menu_background">
 
         <ImageButton
+            android:id="@+id/back_fragment_button_place_and_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_back_button_standart"

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 
@@ -15,6 +16,7 @@ public class PlaceAndOrderFragment extends Fragment implements View.OnClickListe
 
     private OnFragmentInteractionListener mListener;
     LinearLayout[] foods = new LinearLayout[10];
+    ImageButton backFragment;
 
     public PlaceAndOrderFragment() {
         // Required empty public constructor
@@ -37,6 +39,13 @@ public class PlaceAndOrderFragment extends Fragment implements View.OnClickListe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_place_and_order, container, false);
+        backFragment = view.findViewById(R.id.back_fragment_button_place_and_order);
+        backFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.goToEventInformationFragment();
+            }
+        });
 
 
         foods[0] = view.findViewById(R.id.food_0);
@@ -122,5 +131,6 @@ public class PlaceAndOrderFragment extends Fragment implements View.OnClickListe
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
         void openGetFoodByCategoryId(int categoryId);
+        void goToEventInformationFragment();
     }
 }

@@ -39,7 +39,10 @@ public class OrderToCart {
     @ColumnInfo(name = "order_number")
     int orderNumber;
 
-    public OrderToCart(int eventId, int amount, String foodName, String foodSizeName, double price, int foodCategoryId, int orderNumber) {
+    @ColumnInfo(name = "food_size_id")
+    int foodSizeId;
+
+    public OrderToCart(int eventId, int amount, String foodName, String foodSizeName, double price, int foodCategoryId, int orderNumber, int foodSizeId) {
         this.eventId = eventId;
         this.amount = amount;
         this.foodName = foodName;
@@ -47,6 +50,7 @@ public class OrderToCart {
         this.price = price;
         this.foodCategoryId = foodCategoryId;
         this.orderNumber = orderNumber;
+        this.foodSizeId = foodSizeId;
     }
 
     public int getAutoOrderId() {
@@ -109,6 +113,14 @@ public class OrderToCart {
         return orderNumber;
     }
 
+    public int getFoodSizeId() {
+        return foodSizeId;
+    }
+
+    public void setFoodSizeId(int foodSizeId) {
+        this.foodSizeId = foodSizeId;
+    }
+
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
     }
@@ -124,6 +136,7 @@ public class OrderToCart {
                 ", price=" + price +
                 ", foodCategoryId=" + foodCategoryId +
                 ", orderNumber=" + orderNumber +
+                ", foodSizeId=" + foodSizeId +
                 '}';
     }
 }
