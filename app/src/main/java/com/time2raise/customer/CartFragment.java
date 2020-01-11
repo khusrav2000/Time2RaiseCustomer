@@ -179,7 +179,9 @@ public class CartFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<OrderToCart> orderToCarts) {
-            startAddFoodsToOrder(orderToCarts);
+            if (orderToCarts.size() > 0) {
+                startAddFoodsToOrder(orderToCarts);
+            }
         }
     }
 
@@ -204,11 +206,12 @@ public class CartFragment extends Fragment {
                 if (response.code() == 200){
                     OrderRepository orderRepository = new OrderRepository(getActivity().getApplication());
                     for (OrderToCart orderToCart : orderToCarts){
-                        System.out.println("-----------------");
-                        System.out.println(orderToCart.toString());
-                        //orderRepository.delete(orderToCart.getAutoOrderId());
+                        //System.out.println("-----------------");
+                        //System.out.println(orderToCart.toString());
+                        orderRepository.delete(orderToCart.getAutoOrderId());
                     }
                     System.out.println("SUCCESFUL");
+                    mListener.goToBackFragment();
                 }
             }
 

@@ -138,12 +138,6 @@
                 android:layout_marginTop="20dp"
                 android:textColor="@color/orange"/>
 
-            <Button
-                android:id="@+id/obhod_enter_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OBHOD"/>
-
         </LinearLayout>
 
         <TableLayout

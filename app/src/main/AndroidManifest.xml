@@ -16,20 +16,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".FillProfileInformation"></activity>
-        <activity android:name=".ViewProfile" />
-        <activity android:name=".Event" />
-        <activity android:name=".VerificationCode" />
-        <activity android:name=".VerifyPhoneNumber" />
+        <activity android:name=".FillProfileInformation"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ViewProfile"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Event"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".VerificationCode"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".VerifyPhoneNumber"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Profile"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainPageActivity"
-            android:label="@string/title_activity_main_page" />
+            android:label="@string/title_activity_main_page"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

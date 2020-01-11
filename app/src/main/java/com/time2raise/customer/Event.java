@@ -14,12 +14,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+import com.time2raise.customer.data.NetworkClient;
+import com.time2raise.customer.data.apis.Customer;
+import com.time2raise.customer.data.model.CustomerInformation;
 import com.time2raise.customer.data.room.OrderRepository;
 import com.time2raise.customer.data.room.OrderToCart;
 import com.time2raise.customer.data.room.dao.OrderToCartDao;
 
 import java.util.IllegalFormatCodePointException;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 public class Event extends AppCompatActivity implements
@@ -43,6 +52,12 @@ public class Event extends AppCompatActivity implements
     final int PICK_FOOD_NUMBER = 3;
 
     int backFragment = 1;
+
+    final String STORAGE_URL = "https://drive.google.com/uc?export=download&id=";
+    SharedPreferences skipLoginPhone;
+
+    public static final String APP_PREFERENCES = "SkipLoginPhone";
+    public static final String APP_TOKEN = "getToken";
 
 
     PlaceAndOrderFragment placeAndOrderFragment = new PlaceAndOrderFragment();
@@ -69,7 +84,33 @@ public class Event extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 openProfile();
+            }
+        });
 
+        skipLoginPhone  = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        String token    = skipLoginPhone.getString(APP_TOKEN, "");
+
+        Retrofit retrofit = NetworkClient.getRetrofitClient();
+        Customer customer = retrofit.create(Customer.class);
+
+        Call call = customer.getCustomerProfileById(token);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.isSuccessful()){
+                    CustomerInformation customerInformation = ((CustomerInformation) response.body());
+                    Picasso picasso = Picasso.get();
+                    picasso.load(STORAGE_URL + customerInformation.getIconUrl())
+                            .fit()
+                            .error(R.drawable.photo)
+                            .placeholder(R.drawable.icon_loading)
+                            .into(iconProfile);
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
 
             }
         });
@@ -115,8 +156,10 @@ public class Event extends AppCompatActivity implements
     }
 
     private void setCountFoods(List<OrderToCart> orderToCarts) {
+        System.out.println("Count!!!!!!!!!!!!!!!!!!!!!!!!!!!11");
         if(orderToCarts.size() > 0) {
             countFoodsCart.setText(String.valueOf(orderToCarts.size()));
+            countFoodsCart.setVisibility(View.VISIBLE);
         } else {
             countFoodsCart.setVisibility(View.GONE);
         }
@@ -183,6 +226,7 @@ public class Event extends AppCompatActivity implements
 
     @Override
     public void setCountFoodsCart() {
+        System.out.println("--------------Count---------------");
         OrderRepository orderRepository = new OrderRepository(getApplication());
         new GetFoodsAndSetCount(orderRepository, eventId).execute();
     }

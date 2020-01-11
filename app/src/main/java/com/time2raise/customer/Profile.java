@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class Profile extends AppCompatActivity {
     EditText clientLastName;
     EditText clientEmail;
     TextView changeProfileIcon;
+    ProgressBar progressAddPhoto;
     final int PICK_IMAGE_ADD_ICON  = 3;
     Uri add_icon_uri = null;
     String token;
@@ -70,7 +72,7 @@ public class Profile extends AppCompatActivity {
         clientEmail                 = findViewById(R.id.edit_client_email);
         iconProfile                 = findViewById(R.id.profile_icon);
         changeProfileIcon           = findViewById(R.id.change_profile_icon);
-
+        progressAddPhoto            = findViewById(R.id.progress_add_photo);
 
         logout = findViewById(R.id.logout);
 
@@ -229,6 +231,8 @@ public class Profile extends AppCompatActivity {
     }
 
     private void startMainPageActivity() {
+        saveProfileInformation.setVisibility(View.GONE);
+        progressAddPhoto.setVisibility(View.VISIBLE);
         if (validInformation()){
             CustomerInformation customerInformation = new CustomerInformation(
                     0, clientFirstName.getText().toString(),
@@ -244,8 +248,6 @@ public class Profile extends AppCompatActivity {
             Retrofit retrofit = NetworkClient.getRetrofitClient();
             Customer customer = retrofit.create(Customer.class);
 
-            addImages();
-
             Call call = customer.addClientProfile(token, customerInformation);
 
             call.enqueue(new Callback() {
@@ -257,14 +259,22 @@ public class Profile extends AppCompatActivity {
                         SharedPreferences.Editor editor = skipLoginPhone.edit();
                         editor.putInt(APP_CUSTOMER_ID, cus.getCustomerId());
                         editor.apply();
-
-                        openMainPageActivity();
+                        if (add_icon_uri != null) {
+                            addImages();
+                            System.out.println(add_icon_uri);
+                        } else {
+                            openMainPageActivity();
+                        }
+                    } else {
+                        progressAddPhoto.setVisibility(View.GONE);
+                        saveProfileInformation.setVisibility(View.VISIBLE);
                     }
                 }
 
                 @Override
                 public void onFailure(Call call, Throwable t) {
-
+                    progressAddPhoto.setVisibility(View.GONE);
+                    saveProfileInformation.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -320,9 +330,21 @@ public class Profile extends AppCompatActivity {
                     System.out.println("CAAAATCK" );
                     e.printStackTrace();
                 }
-
             }
             return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+
+            System.out.println("ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!11" + aBoolean);
+            if (aBoolean){
+                openMainPageActivity();
+            } else {
+                progressAddPhoto.setVisibility(View.GONE);
+                saveProfileInformation.setVisibility(View.VISIBLE);
+            }
         }
     }
 

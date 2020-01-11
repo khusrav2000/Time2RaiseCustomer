@@ -133,6 +133,7 @@ public class PickFoodsByCategoryIdFragment extends Fragment {
                         System.out.println(orderToCart.toString());
                     }
                 }
+                orderToCarts.clear();
                 mListener.setCountFoodsCart();
                 mListener.goToPlaceAndOrder();
             }

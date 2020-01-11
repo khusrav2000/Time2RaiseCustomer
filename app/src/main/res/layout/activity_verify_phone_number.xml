@@ -20,6 +20,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_row="0"
             android:background="@drawable/orange_gradient">
 
             <RelativeLayout
@@ -114,11 +115,6 @@
                 android:textColor="@color/white"
                 android:fontFamily="@font/roboto_medium"/>
 
-            <Button
-                android:id="@+id/OBHOD"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="OBHOD"/>
         </LinearLayout>
 
         <TableLayout

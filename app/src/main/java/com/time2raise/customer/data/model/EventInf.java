@@ -43,7 +43,11 @@ public class EventInf {
     @Expose
     private List<Photo> photo;
 
-    public EventInf(int eventId, int orgId, int requestId, String name, String date, String start, String end, String about, List<Photo> photo) {
+    @SerializedName("ZipCode")
+    @Expose
+    private int zipCode;
+
+    public EventInf(int eventId, int orgId, int requestId, String name, String date, String start, String end, String about, List<Photo> photo, int zipCode) {
         this.eventId = eventId;
         this.orgId = orgId;
         this.requestId = requestId;
@@ -53,6 +57,7 @@ public class EventInf {
         this.end = end;
         this.about = about;
         this.photo = photo;
+        this.zipCode = zipCode;
     }
 
     public int getEventId() {
@@ -127,6 +132,14 @@ public class EventInf {
         this.photo = photo;
     }
 
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
+
     @Override
     public String toString() {
         return "EventInf{" +
@@ -139,6 +152,7 @@ public class EventInf {
                 ", end='" + end + '\'' +
                 ", about='" + about + '\'' +
                 ", photo=" + photo +
+                ", zipCode=" + zipCode +
                 '}';
     }
 }

@@ -62,14 +62,6 @@ public class VerifyPhoneNumber extends AppCompatActivity implements View.OnClick
             }
         });
 
-        obhod = findViewById(R.id.OBHOD);
-        obhod.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startEnterVerificationCode("");
-            }
-        });
-
         numbers[0] = findViewById(R.id.number_zero);
         numbers[1] = findViewById(R.id.number_one);
         numbers[2] = findViewById(R.id.number_two);
@@ -156,6 +148,7 @@ public class VerifyPhoneNumber extends AppCompatActivity implements View.OnClick
                     t.printStackTrace();
                 }
             });
+
             System.out.println(sendVerificationNumber + " --------------------------------------");
         }else {
             phoneNumber.setError(getString(R.string.error_number_phone));

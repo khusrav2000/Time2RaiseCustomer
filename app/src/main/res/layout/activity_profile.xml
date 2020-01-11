@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_icon"
                 android:layout_width="103dp"
                 android:layout_height="94dp"
@@ -150,7 +150,14 @@
                     android:textColor="@color/profile_text_color_black"
                     android:textSize="14sp" />
             </RelativeLayout>
-            
+
+            <ProgressBar
+                android:id="@+id/progress_add_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"/>
             <Button
                 android:id="@+id/save_profile_information"
                 android:layout_width="289dp"

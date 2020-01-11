@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +25,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-
 public class ListEventsFragment extends Fragment  {
 
 
@@ -47,12 +41,10 @@ public class ListEventsFragment extends Fragment  {
     SharedPreferences skipLoginPhone;
 
     String token;
+    String filterText;
 
+    MyListEventsRecyclerViewAdapter adapter;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ListEventsFragment() {
     }
 
@@ -91,7 +83,43 @@ public class ListEventsFragment extends Fragment  {
             loadEvents();
             //recyclerView.setAdapter(new MyListEventsRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
+
+        setSearchListener();
         return view;
+    }
+
+    public void setSearchListener(){
+        SearchView searchView = getActivity().findViewById(R.id.search);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterItems(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterItems(newText);
+                System.out.println("IT IS WORK _______________--------------");
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                filterItems("");
+                System.out.println("Close!!!!");
+                return false;
+            }
+        });
+    }
+
+    private void filterItems(String text) {
+        filterText = text;
+        if (adapter != null ) {
+            adapter.getFilter().filter(filterText);
+        }
     }
 
 
@@ -111,17 +139,6 @@ public class ListEventsFragment extends Fragment  {
         super.onDetach();
         mListener = null;
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
 
 
     public interface OnListFragmentInteractionListener {
@@ -167,11 +184,8 @@ public class ListEventsFragment extends Fragment  {
     private void updateToken(){
         skipLoginPhone = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
-
         Retrofit retrofit = NetworkClient.getRetrofitClient();
         Customer customer = retrofit.create(Customer.class);
-
-
         Call call = customer.getNewToken(token);
 
         call.enqueue(new Callback() {
@@ -196,6 +210,10 @@ public class ListEventsFragment extends Fragment  {
     }
 
     private void setAdapter(List<EventInf> events){
-        recyclerView.setAdapter(new MyListEventsRecyclerViewAdapter(events, mListener));
+        adapter = new MyListEventsRecyclerViewAdapter(getActivity(), events, mListener);
+        if (filterText != null){
+            adapter.getFilter().filter(filterText);
+        }
+        recyclerView.setAdapter(adapter);
     }
 }
